@@ -1,0 +1,9 @@
+*.class
+.project
+.classpath
+.settings/
+.metadata
+~$Clue_Layout.xlsx
+Clue_Layout.xls
+Clue_Layout.csv
+Clue_Legend.txt

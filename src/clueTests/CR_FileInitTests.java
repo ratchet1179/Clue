@@ -24,7 +24,7 @@ public class CR_FileInitTests {
 	private static Board board;
 	
 	@BeforeClass
-	public static void setUp(){
+	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
 		board = new Board();
 		board.initialize();
 	}

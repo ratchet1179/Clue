@@ -88,16 +88,14 @@ public class CR_FileInitTests {
 	}
 	
 	
-	// Test that an exception is thrown for a bad config file
+
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 			Board board = new Board("ClueLayoutBadColumns.csv", "ClueLegend.txt");
 			board.loadRoomConfig();
-			// This one should throw an exception
 			board.loadBoardConfig();
 		}
 		
-		// Test that an exception is thrown for a bad config file
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
 			Board board = new Board("ClueLayoutBadRoom.csv", "ClueLegend.txt");
@@ -105,8 +103,6 @@ public class CR_FileInitTests {
 			board.loadBoardConfig();
 		}
 		
-		
-		// Test that an exception is thrown for a bad room config file
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 			Board board = new Board("ClueLayout.csv", "ClueLegendBadFormat.txt");

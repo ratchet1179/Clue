@@ -1,0 +1,10 @@
+B,Bathroom,Card
+P,Poolhouse,Card
+L,Lounge,Card
+D,Den,Card
+S,Showroom,Card
+G,Guest Room,Card
+M,Master Bedroom,Card
+K,Kitchen,Card
+w,Walkway,Other
+X,Closet,Other

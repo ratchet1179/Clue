@@ -13,26 +13,28 @@ import java.util.Set;
 public class Board {
 	private int numColumns, numRows;
 	private BoardCell[][] board;
-	private static Map<Character, String> rooms;
+	private static Map<Character, String> rooms = new HashMap<Character, String>();
 	private String boardFile, legendFile;
 	public boolean doorWay;
 	
 	public Board(String boardFile, String legendFile) {
 		this.boardFile = boardFile;
 		this.legendFile = legendFile;
-		
+		updateRooms(rooms);
 		
 	}
 
 	public Board() {
-		boardFile = "ClueLayout.csv";
-		legendFile = "ClueLegend.txt";
+		boardFile = "Clue_LayoutStudent.csv";
+		legendFile = "Clue_LegendStudent.txt";
+		updateRooms(rooms);
 	}
 
 	public void initialize() throws FileNotFoundException, BadConfigFormatException{
 		
 		loadRoomConfig();
 		loadBoardConfig();
+		updateRooms(rooms);
 	}
 
 	public static Map<Character, String> getRooms() {
@@ -62,7 +64,9 @@ public class Board {
 		try 
 		{
 			legendReader = new BufferedReader(new FileReader(legendFile));
+			
 			rooms = new HashMap<Character, String>();
+			
 			while ((line = legendReader.readLine()) != null) 
 			{
 				// use comma as separator
@@ -73,7 +77,8 @@ public class Board {
 				char key = data[0].toCharArray()[0];
 				String value = data[1].trim();
 				
-				rooms.put(key, value);
+				
+					rooms.put(key, value);
 			}
 		}
 		
@@ -84,6 +89,7 @@ public class Board {
 	}
 	
 	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException{
+		
 		ArrayList<ArrayList<BoardCell>> tempBoard = new ArrayList<ArrayList<BoardCell>>();
 		String line = "";
 		String delimiter = ",";
@@ -99,6 +105,7 @@ public class Board {
 				String[] data = line.split(delimiter);
 				tempBoard.add(new ArrayList<BoardCell>());
 				for (String s : data){
+					
 					BoardCell b = stringToBoardCell(s);
 					
 					b.setCol(tempBoardCol);
@@ -146,7 +153,7 @@ public class Board {
 
 	public BoardCell stringToBoardCell(String data) throws BadConfigFormatException
 	{
-		RoomCell direction = new RoomCell(DoorDirection.NONE);
+		BoardCell direction = new BoardCell(DoorDirection.NONE);
 
 		if (data.length() != 1) 
 		{
@@ -160,22 +167,33 @@ public class Board {
 
 		switch (data.substring(0, 1))
 		{
-		case "C": return new RoomCell(direction.doorDirection, 'C');
-		case "K": return new RoomCell(direction.doorDirection, 'K');
-		case "B": return new RoomCell(direction.doorDirection, 'B');
-		case "R": return new RoomCell(direction.doorDirection, 'R');
-		case "L": return new RoomCell(direction.doorDirection, 'L');
-		case "S": return new RoomCell(direction.doorDirection, 'S');
-		case "D": return new RoomCell(direction.doorDirection, 'D');
-		case "O": return new RoomCell(direction.doorDirection, 'O');
-		case "H": return new RoomCell(direction.doorDirection, 'H');
-		case "X": return new RoomCell(direction.doorDirection, 'X');
+		case "C": return new BoardCell(direction.doorDirection, 'C');
+		case "K": return new BoardCell(direction.doorDirection, 'K');
+		case "B": return new BoardCell(direction.doorDirection, 'B');
+		case "R": return new BoardCell(direction.doorDirection, 'R');
+		case "L": return new BoardCell(direction.doorDirection, 'L');
+		case "S": return new BoardCell(direction.doorDirection, 'S');
+		case "D": return new BoardCell(direction.doorDirection, 'D');
+		case "O": return new BoardCell(direction.doorDirection, 'O');
+		case "H": return new BoardCell(direction.doorDirection, 'H');
+		case "X": return new BoardCell(direction.doorDirection, 'X');
+		case "P": return new BoardCell(direction.doorDirection, 'P');
+		case "G": return new BoardCell(direction.doorDirection, 'G');
+		case "M": return new BoardCell(direction.doorDirection, 'M');
+		case "w": return new WalkwayCell();
 		case "W": return new WalkwayCell();
+		
+		default: throw new BadConfigFormatException("Invalid room character on the board."); 
 		}
 
 		// will fill empty boardCells with '?' characters that can be filtered for if needed
-		return new RoomCell(direction.doorDirection.NONE, '?');
+		//return new BoardCell(direction.doorDirection.NONE, '?');
 	}
+	
+	public void updateRooms(Map<Character, String> rooms) 
+	{
+		this.rooms = new HashMap<Character, String>(rooms); 
+	} 
 
 	public LinkedList<BoardCell> getAdjList(int i, int j) {
 		// TODO Auto-generated method stub

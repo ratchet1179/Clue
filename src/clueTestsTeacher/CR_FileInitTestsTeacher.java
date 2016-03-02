@@ -16,6 +16,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 
 import clueGame.DoorDirection;
+import clueGame.RoomCell;
 
 public class CR_FileInitTestsTeacher {
 	// Constants that I will use to test whether the file was loaded correctly
@@ -119,7 +120,7 @@ public class CR_FileInitTestsTeacher {
 		// testing exceptions in lab writeup. 
 		// Note that we are using a LOCAL Board variable, not the static one 
 		// set up by @BeforeClass
-		Board board = new Board("ClueLayoutBadColumns.csv", "ClueLegend.txt");
+		Board board = new Board("ClueLayoutBadColumns.csv", "Clue_LegendTeacher.txt");
 		// Instead of initialize, we call the two load functions directly
 		board.loadRoomConfig();
 		// This one should throw an exception
@@ -128,14 +129,14 @@ public class CR_FileInitTestsTeacher {
 	// Test that an exception is thrown for a bad config file
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
-		Board board = new Board("ClueLayoutBadRoom.csv", "ClueLegend.txt");
+		Board board = new Board("ClueLayoutBadRoom.csv", "Clue_LegendTeacher.txt");
 		board.loadRoomConfig();
 		board.loadBoardConfig();
 	}
 	// Test that an exception is thrown for a bad room config file
 	@Test (expected = BadConfigFormatException.class)
 	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
-		Board board = new Board("ClueLayout.csv", "ClueLegendBadFormat.txt");
+		Board board = new Board("Clue_LayoutTeacher.csv", "ClueLegendBadFormat.txt");
 		board.loadRoomConfig();
 	}
 }

@@ -16,7 +16,7 @@ import clueGame.DoorDirection;
 
 public class CR_FileInitTests {
 
-	public static final int NUM_ROOMS = 9;
+	public static final int NUM_ROOMS = 10;
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 23;
 
@@ -27,6 +27,7 @@ public class CR_FileInitTests {
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
 		board = new Board();
 		board.initialize();
+	
 	}
 	
 	@Test
@@ -91,21 +92,21 @@ public class CR_FileInitTests {
 
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
-			Board board = new Board("ClueLayoutBadColumns.csv", "ClueLegend.txt");
+			Board board = new Board("ClueLayoutBadColumns.csv", "Clue_LegendStudent.txt");
 			board.loadRoomConfig();
 			board.loadBoardConfig();
 		}
 		
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
-			Board board = new Board("ClueLayoutBadRoom.csv", "ClueLegend.txt");
+			Board board = new Board("ClueLayoutBadRoom.csv", "Clue_LegendStudent.txt");
 			board.loadRoomConfig();
 			board.loadBoardConfig();
 		}
 		
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
-			Board board = new Board("ClueLayout.csv", "ClueLegendBadFormat.txt");
+			Board board = new Board("Clue_LayoutStudent.csv", "ClueLegendBadFormat.txt");
 			board.loadRoomConfig();
 		}
 	

@@ -8,6 +8,7 @@ public class RoomCell extends BoardCell {
 	public RoomCell(DoorDirection doorDirection) {
 		super();
 		this.doorDirection = doorDirection;
+		
 	}
 
 	public RoomCell(DoorDirection doorDirection, char roomLetter) {
@@ -32,6 +33,16 @@ public class RoomCell extends BoardCell {
 		this.roomLetter = roomLetter;
 	}
 	
+	public char getInitial(){
+		return roomLetter;
+	}
 	
+	public boolean isRoom(){
+		return true;
+	}
+	
+	public boolean isDoorWay(){
+		return (doorDirection != DoorDirection.NONE);
+	}
 
 }

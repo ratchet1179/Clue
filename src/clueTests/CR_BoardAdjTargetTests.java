@@ -18,7 +18,7 @@ public class CR_BoardAdjTargetTests {
 	private static Board board;
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
-		board = new Board("ClueLayout.csv", "ClueLegend.txt");
+		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt");
 		board.initialize();
 	}
 	
@@ -65,10 +65,12 @@ public class CR_BoardAdjTargetTests {
 	@Test
 	public void testRoomCellNotDoorWay(){
 		
-		LinkedList<BoardCell> testList = board.getAdjList(7, 19);
-		assertEquals(2, testList.size());
-		assertTrue(testList.contains(board.getCellAt(7, 20)));
-		assertTrue(testList.contains(board.getCellAt(7, 18)));
+		LinkedList<BoardCell> testList = board.getAdjList(17, 7);
+		assertEquals(3, testList.size());
+		assertTrue(testList.contains(board.getCellAt(16, 7)));
+		assertTrue(testList.contains(board.getCellAt(18, 7)));
+		assertTrue(testList.contains(board.getCellAt(17, 8)));
+
 		
 		testList = board.getAdjList(10, 7);
 		assertEquals(3, testList.size());
@@ -156,10 +158,12 @@ public class CR_BoardAdjTargetTests {
 		//Test with 4 step
 		board.calcTargets(21, 7, 4);
 		targets = board.getTargets();
-		assertEquals(3, targets.size());
+		assertEquals(4, targets.size());
 		assertTrue(targets.contains(board.getCellAt(19, 7)));
 		assertTrue(targets.contains(board.getCellAt(17, 7)));
 		assertTrue(targets.contains(board.getCellAt(18, 8)));
+		assertTrue(targets.contains(board.getCellAt(20, 8)));
+
 		
 	}
 	
@@ -168,12 +172,13 @@ public class CR_BoardAdjTargetTests {
 		
 		board.calcTargets(6, 2, 2);
 		Set<BoardCell> targets = board.getTargets();
-		assertEquals(5, targets.size());
+		assertEquals(6, targets.size());
 		assertTrue(targets.contains(board.getCellAt(4, 2)));
 		assertTrue(targets.contains(board.getCellAt(5, 3)));
 		assertTrue(targets.contains(board.getCellAt(6, 0)));
 		assertTrue(targets.contains(board.getCellAt(7, 1)));
 		assertTrue(targets.contains(board.getCellAt(6, 4)));
+		assertTrue(targets.contains(board.getCellAt(5, 1)));
 		
 		board.calcTargets(16, 18, 1);
 		targets = board.getTargets();

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -15,18 +16,24 @@ public class Board {
 	private BoardCell[][] board;
 	private static Map<Character, String> rooms = new HashMap<Character, String>();
 	private String boardFile, legendFile;
-	public boolean doorWay;
+	private Set<BoardCell> visited;
+	private Set<BoardCell> targets;
+	private Map<BoardCell, LinkedList<BoardCell>> adjMtx;
+
 	
 	public Board(String boardFile, String legendFile) {
 		this.boardFile = boardFile;
 		this.legendFile = legendFile;
+		adjMtx = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		updateRooms(rooms);
 		
 	}
 
 	public Board() {
-		boardFile = "Clue_LayoutStudent.csv";
-		legendFile = "Clue_LegendStudent.txt";
+		boardFile = "Clue_LayoutTeacher.csv";
+		legendFile = "Clue_LegendTeacher.txt";
+		adjMtx = new HashMap<BoardCell, LinkedList<BoardCell>>();
+
 		updateRooms(rooms);
 	}
 
@@ -186,8 +193,71 @@ public class Board {
 		default: throw new BadConfigFormatException("Invalid room character on the board."); 
 		}
 
-		// will fill empty boardCells with '?' characters that can be filtered for if needed
-		//return new BoardCell(direction.doorDirection.NONE, '?');
+	}
+	
+	public void calcAdjacencies() {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				
+				LinkedList<BoardCell> adjList = new LinkedList<BoardCell>();
+
+				
+				if (board[i][j].isRoom() && board[i][j].isDoorway()) {
+					
+					switch((board[i][j]).getDoorDirection()) {
+					case UP:
+						adjList.add(board[i - 1][j]);
+						break;
+					case DOWN:
+						adjList.add(board[i + 1][j]);
+						break;
+					case LEFT:
+						adjList.add(board[i][j - 1]);
+						break;
+					case RIGHT:
+						adjList.add(board[i][j + 1]);
+						break;
+					case NONE:
+						break;
+					default:
+						break;
+					}
+				}
+
+				else if (board[i][j].isWalkway()) {
+
+					if (i - 1 >= 0) {
+						if (board[i - 1][j].isWalkway()) 
+							adjList.add(board[i - 1][j]);
+						else if (board[i - 1][j].isDoorway() && (board[i - 1][j]).getDoorDirection() == DoorDirection.DOWN)
+							adjList.add(board[i - 1][j]);
+					}
+
+					if (j - 1 >= 0) {
+						if (board[i][j - 1].isWalkway()) 
+							adjList.add(board[i][j - 1]);
+						else if (board[i][j - 1].isDoorway() && (board[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) 
+							adjList.add(board[i][j - 1]);
+					}
+					
+					if (i + 1 < numRows) {
+						if (board[i + 1][j].isWalkway()) 
+							adjList.add(board[i + 1][j]);
+						else if (board[i + 1][j].isDoorway() && (board[i + 1][j]).getDoorDirection() == DoorDirection.UP) 
+							adjList.add(board[i + 1][j]);
+					}
+
+					if (j + 1 < numColumns) {
+						if (board[i][j + 1].isWalkway()) 
+							adjList.add(board[i][j + 1]);
+						else if (board[i][j + 1].isDoorway() && (board[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) 
+							adjList.add(board[i][j + 1]);
+					}
+				}
+
+				adjMtx.put(board[i][j], adjList);
+			}
+		}	
 	}
 	
 	public void updateRooms(Map<Character, String> rooms) 
@@ -196,18 +266,44 @@ public class Board {
 	} 
 
 	public LinkedList<BoardCell> getAdjList(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+		calcAdjacencies();
+		return adjMtx.get(board[i][j]);
 	}
 
 	public void calcTargets(int i, int j, int steps) {
-		// TODO Auto-generated method stub
+		calcTargets(board[i][j], steps);
+	}
+
+	private void calcTargets(BoardCell boardCell, int steps) {
+		visited = new HashSet<BoardCell>();
+		visited.add(boardCell);
+		targets = new HashSet<BoardCell>();
 		
+		findAllTargets(boardCell, steps);
+	}
+
+	private void findAllTargets(BoardCell boardCell, int steps) {
+		
+		LinkedList<BoardCell> adjacentCells = new LinkedList<BoardCell>(adjMtx.get(boardCell));
+		for (BoardCell cell : visited) {
+			if (adjacentCells.contains(cell)) adjacentCells.remove(cell);
+		}
+
+		for (BoardCell adjCell : adjacentCells) {
+			visited.add(adjCell);
+
+			if (steps == 1 || adjCell.isDoorway()){
+				targets.add(adjCell);
+			}
+			
+			else findAllTargets(adjCell, steps - 1);
+
+			visited.remove(adjCell);
+		}		
 	}
 
 	public Set<BoardCell> getTargets() {
-		// TODO Auto-generated method stub
-		return null;
+		return targets;
 	}
 
 }

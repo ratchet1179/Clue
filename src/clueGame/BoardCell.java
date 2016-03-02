@@ -66,8 +66,21 @@ public class BoardCell {
 	}
 
 	public boolean isWalkway() {
-		// TODO Auto-generated method stub
+		if(roomLetter == 'W' || roomLetter == 'w')
+			return true;
 		return false;
+	}
+
+	public boolean isRoom() {
+		if(roomLetter != 'w' || roomLetter != 'W' || roomLetter != 'X')
+			return true;
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardCell [row=" + row + ", col=" + col + ", doorDirection=" + doorDirection + ", roomLetter="
+				+ roomLetter + "]\n";
 	}
 	
 

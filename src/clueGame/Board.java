@@ -20,25 +20,23 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Map<BoardCell, LinkedList<BoardCell>> adjMtx;
 
-	
+
 	public Board(String boardFile, String legendFile) {
 		this.boardFile = boardFile;
 		this.legendFile = legendFile;
 		adjMtx = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		updateRooms(rooms);
-		
+
 	}
 
 	public Board() {
 		boardFile = "Clue_LayoutTeacher.csv";
 		legendFile = "Clue_LegendTeacher.txt";
 		adjMtx = new HashMap<BoardCell, LinkedList<BoardCell>>();
-
 		updateRooms(rooms);
 	}
 
 	public void initialize() throws FileNotFoundException, BadConfigFormatException{
-		
 		loadRoomConfig();
 		loadBoardConfig();
 		updateRooms(rooms);
@@ -62,94 +60,83 @@ public class Board {
 
 
 	@SuppressWarnings("resource")
-	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException
-	{
+	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException {
 		BufferedReader legendReader;
 		String line = "";
 		String delimiter = ",";
-		
-		try 
-		{
+
+		try {
 			legendReader = new BufferedReader(new FileReader(legendFile));
-			
+
 			rooms = new HashMap<Character, String>();
-			
-			while ((line = legendReader.readLine()) != null) 
-			{
+
+			while ((line = legendReader.readLine()) != null) {
 				// use comma as separator
 				String[] data = line.split(delimiter);
-				
+
 				if (data.length != 3) throw new BadConfigFormatException(". Invalid format on legend file. Error in loadRoomConfig()");
-				
+
 				char key = data[0].toCharArray()[0];
 				String value = data[1].trim();
-				
-				
-					rooms.put(key, value);
+
+				rooms.put(key, value);
 			}
-		}
-		
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}	
 	}
-	
-	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException{
-		
+
+	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException {
+
 		ArrayList<ArrayList<BoardCell>> tempBoard = new ArrayList<ArrayList<BoardCell>>();
 		String line = "";
 		String delimiter = ",";
 		BufferedReader boardReader;
-		
-		try{
-			
+
+		try {
+
 			int tempBoardRow = 0;
 			int tempBoardCol = 0;
 			boardReader = new BufferedReader(new FileReader(boardFile));
-			
-			while((line = boardReader.readLine())  != null){
+
+			while((line = boardReader.readLine())  != null) {
 				String[] data = line.split(delimiter);
 				tempBoard.add(new ArrayList<BoardCell>());
 				for (String s : data){
-					
+
 					BoardCell b = stringToBoardCell(s);
-					
+
 					b.setCol(tempBoardCol);
 					b.setRow(tempBoardRow);					
 					tempBoard.get(tempBoardRow).add(b);
 					tempBoardCol++;
-					
+
 				}
 				tempBoardRow++;
 				tempBoardCol = 0;
 			}
-			
-		} 
-		catch (FileNotFoundException e) {
-				System.out.println("CSV File not found");
-			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("CSV File not found");
+		}
 		catch (IOException e) {
 			System.out.println(e);
 		}
-		
+
 		numRows = tempBoard.size();
 		numColumns = tempBoard.get(0).size();
 		board = new BoardCell[numRows][numColumns];
-		
+
 		for (int i = 0; i < numRows; i++) {
-			for (int j = 0; j < numColumns; j++) 
-			{
+			for (int j = 0; j < numColumns; j++) {
 				// if the config file has uneven columns or rows, 
 				// the following statement will throw an IndexOutOfBoundsException
-				try 
-				{
+				try {
 					board[i][j] = tempBoard.get(i).get(j);
 				}
 
 				// We convert it here to a BadConfigFormatException
-				catch (Exception e) 
-				{
+				catch (Exception e) {
 					throw new BadConfigFormatException(". Rows or columns uneven. Error in loadBoardConfig()");
 				}
 			}
@@ -158,12 +145,11 @@ public class Board {
 
 	}
 
-	public BoardCell stringToBoardCell(String data) throws BadConfigFormatException
-	{
+	public BoardCell stringToBoardCell(String data) throws BadConfigFormatException {
+
 		BoardCell direction = new BoardCell(DoorDirection.NONE);
 
-		if (data.length() != 1) 
-		{
+		if (data.length() != 1) {
 			if(data.endsWith("U")) direction.doorDirection = DoorDirection.UP;
 			else if(data.endsWith("D")) direction.doorDirection = DoorDirection.DOWN;
 			else if(data.endsWith("L")) direction.doorDirection = DoorDirection.LEFT;
@@ -172,8 +158,7 @@ public class Board {
 			else throw new BadConfigFormatException(". Invalid characters on board. Error in convertToBoardCell()" );
 		}
 
-		switch (data.substring(0, 1))
-		{
+		switch (data.substring(0, 1)) {
 		case "C": return new BoardCell(direction.doorDirection, 'C');
 		case "K": return new BoardCell(direction.doorDirection, 'K');
 		case "B": return new BoardCell(direction.doorDirection, 'B');
@@ -189,21 +174,22 @@ public class Board {
 		case "M": return new BoardCell(direction.doorDirection, 'M');
 		case "w": return new WalkwayCell();
 		case "W": return new WalkwayCell();
-		
+
 		default: throw new BadConfigFormatException("Invalid room character on the board."); 
+
 		}
 
 	}
-	
+
 	public void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
-				
+
 				LinkedList<BoardCell> adjList = new LinkedList<BoardCell>();
 
-				
+
 				if (board[i][j].isRoom() && board[i][j].isDoorway()) {
-					
+
 					switch((board[i][j]).getDoorDirection()) {
 					case UP:
 						adjList.add(board[i - 1][j]);
@@ -239,7 +225,7 @@ public class Board {
 						else if (board[i][j - 1].isDoorway() && (board[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) 
 							adjList.add(board[i][j - 1]);
 					}
-					
+
 					if (i + 1 < numRows) {
 						if (board[i + 1][j].isWalkway()) 
 							adjList.add(board[i + 1][j]);
@@ -259,7 +245,7 @@ public class Board {
 			}
 		}	
 	}
-	
+
 	public void updateRooms(Map<Character, String> rooms) 
 	{
 		this.rooms = new HashMap<Character, String>(rooms); 
@@ -275,16 +261,19 @@ public class Board {
 	}
 
 	private void calcTargets(BoardCell boardCell, int steps) {
+
 		visited = new HashSet<BoardCell>();
 		visited.add(boardCell);
 		targets = new HashSet<BoardCell>();
-		
+
 		findAllTargets(boardCell, steps);
 	}
 
 	private void findAllTargets(BoardCell boardCell, int steps) {
-		
-		LinkedList<BoardCell> adjacentCells = new LinkedList<BoardCell>(adjMtx.get(boardCell));
+
+		LinkedList<BoardCell> adjacentCells = new LinkedList<BoardCell>();
+		calcAdjacencies();
+		adjacentCells = adjMtx.get(boardCell);
 		for (BoardCell cell : visited) {
 			if (adjacentCells.contains(cell)) adjacentCells.remove(cell);
 		}
@@ -295,7 +284,7 @@ public class Board {
 			if (steps == 1 || adjCell.isDoorway()){
 				targets.add(adjCell);
 			}
-			
+
 			else findAllTargets(adjCell, steps - 1);
 
 			visited.remove(adjCell);

@@ -16,7 +16,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 
 import clueGame.DoorDirection;
-import clueGame.RoomCell;
+
 
 public class CR_FileInitTestsTeacher {
 	// Constants that I will use to test whether the file was loaded correctly

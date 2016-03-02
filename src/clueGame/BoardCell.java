@@ -1,24 +1,24 @@
 package clueGame;
 
 public class BoardCell {
-	
+
 	private int row, col;
 	public DoorDirection doorDirection;
 	char roomLetter;
-	
+
 	public BoardCell() {
 		super();
 		row = 0;
 		col = 0;
 		doorDirection = DoorDirection.NONE;
-		
+
 	}
-	
+
 	public BoardCell(DoorDirection doorDirection) {
 		super();
 		this.doorDirection = doorDirection;
 	}
-	
+
 
 	public BoardCell(DoorDirection doorDirection, char roomLetter) {
 		super();
@@ -50,18 +50,16 @@ public class BoardCell {
 	}
 
 	public char getInitial() {
-		
+
 		return roomLetter;
 	}
 
 
 	public boolean isDoorway() {
-		// TODO Auto-generated method stub
 		return (doorDirection != DoorDirection.NONE);
 	}
 
 	public DoorDirection getDoorDirection() {
-		// TODO Auto-generated method stub
 		return doorDirection;
 	}
 
@@ -82,6 +80,6 @@ public class BoardCell {
 		return "BoardCell [row=" + row + ", col=" + col + ", doorDirection=" + doorDirection + ", roomLetter="
 				+ roomLetter + "]\n";
 	}
-	
+
 
 }

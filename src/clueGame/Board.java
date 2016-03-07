@@ -172,6 +172,7 @@ public class Board {
 		case "P": return new BoardCell(direction.doorDirection, 'P');
 		case "G": return new BoardCell(direction.doorDirection, 'G');
 		case "M": return new BoardCell(direction.doorDirection, 'M');
+		case "J": return new BoardCell(direction.doorDirection, 'J');
 		case "w": return new WalkwayCell();
 		case "W": return new WalkwayCell();
 

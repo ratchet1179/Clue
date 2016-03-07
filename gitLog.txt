@@ -1,0 +1,60 @@
+$ git log
+
+This project was done with pair programming so 
+only one git local repository used
+Collaborator: Dristen Juhl
+
+commit 485cb5ade74e68501e768338e866c0f50abe258d
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Tue Mar 1 21:34:31 2016 -0700
+
+    Part III finished adjaceny and target tests passed
+
+commit ec7fb368edd87ca7a5638f7d0ec11c0c20457f8d
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Tue Mar 1 21:04:10 2016 -0700
+
+    All adjacency tests pass for student and teacher for part III
+
+commit b7420b0946883673d5d05e1a2cb496aca7376392
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Tue Mar 1 19:53:15 2016 -0700
+
+    Part II tests fully pass for both teacher and student runs
+
+commit db46f58896db7f649221a65cbb0898f993266a1c
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Mon Feb 29 22:03:41 2016 -0700
+
+    Part II tests implemented not all Part I tests passed
+
+commit 32d80aa7cdf1c0ff9a0c17fddd280ecbc34cc8d2
+Merge: 85d8e31 02eabe0
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Mon Feb 29 18:24:01 2016 -0700
+
+    Merge branch 'master' of https://github.com/ratchet1179/Clue
+
+commit 85d8e318fcbc125ac06e2e7b4e9e657fb6b72f42
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Mon Feb 29 18:21:36 2016 -0700
+
+    Finished part 1 file config tests fail
+
+commit 02eabe02acd552778c58dc4b830ee6dea3af5d7e
+Author: ratchet1179 <sandrew@mines.edu>
+Date:   Mon Feb 29 18:20:00 2016 -0700
+
+    Initial commit
+
+commit 9fe10a4cb514329a96d317e2ffae20104e517941
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Thu Feb 25 18:32:58 2016 -0700
+
+    Finished Part 1 File fail tests are created
+
+commit 0fba31263d92f07c9354b6c8ac37a986ebb051c0
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Thu Feb 25 17:42:59 2016 -0700
+
+    Initial Commit

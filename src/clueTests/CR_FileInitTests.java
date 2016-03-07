@@ -16,7 +16,7 @@ import clueGame.DoorDirection;
 
 public class CR_FileInitTests {
 
-	public static final int NUM_ROOMS = 10;
+	public static final int NUM_ROOMS = 11;
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 23;
 
@@ -25,7 +25,7 @@ public class CR_FileInitTests {
 
 	@BeforeClass
 	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
-		board = new Board();
+		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt");
 		board.initialize();
 
 	}
@@ -45,6 +45,7 @@ public class CR_FileInitTests {
 		assertEquals("Kitchen", rooms.get('K'));
 		assertEquals("Walkway", rooms.get('w'));
 		assertEquals("Closet", rooms.get('X'));
+		assertEquals("Joe's Room", rooms.get('J'));
 	}
 
 	@Test
@@ -55,7 +56,7 @@ public class CR_FileInitTests {
 
 	@Test
 	public void testRoomInitials() {
-
+		
 		assertEquals('B', board.getCellAt(0, 0).getInitial());
 		assertEquals('D', board.getCellAt(0, 9).getInitial());
 		assertEquals('K', board.getCellAt(0, 15).getInitial());
@@ -65,6 +66,7 @@ public class CR_FileInitTests {
 		assertEquals('L', board.getCellAt(21, 0).getInitial());
 		assertEquals('S', board.getCellAt(18, 13).getInitial());
 		assertEquals('G', board.getCellAt(21, 22).getInitial());
+		assertEquals('J', board.getCellAt(9, 20).getInitial());
 	}
 
 	@Test

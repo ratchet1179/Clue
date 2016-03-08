@@ -18,7 +18,7 @@ import clueGame.BoardCell;
 import clueGame.DoorDirection;
 
 
-public class CR_FileInitTestsTeacher {
+public class FileInitTestsTeacher {
 	// Constants that I will use to test whether the file was loaded correctly
 	public static final int NUM_ROOMS = 11;
 	public static final int NUM_ROWS = 22;

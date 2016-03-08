@@ -14,7 +14,7 @@ import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 
-public class CR_BoardAdjTargetTestsTeacher {
+public class BoardAdjTargetTestsTeacher {
 	// We make the Board static because we can load it one time and 
 	// then do all the tests. 
 	private static Board board;

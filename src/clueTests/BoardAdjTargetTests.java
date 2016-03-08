@@ -13,7 +13,7 @@ import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 
-public class CR_BoardAdjTargetTests {
+public class BoardAdjTargetTests {
 
 	private static Board board;
 	@BeforeClass

@@ -14,7 +14,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.DoorDirection;
 
-public class CR_FileInitTests {
+public class FileInitTests {
 
 	public static final int NUM_ROOMS = 11;
 	public static final int NUM_ROWS = 22;

@@ -7,5 +7,5 @@ G,Guest Room,Card
 M,Master Bedroom,Card
 K,Kitchen,Card
 J,Joe's Room, Card
-w,Walkway,Other
+W,Walkway,Other
 X,Closet,Other

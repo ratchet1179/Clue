@@ -73,6 +73,7 @@ public class Board {
 			while ((line = legendReader.readLine()) != null) {
 				// use comma as separator
 				String[] data = line.split(delimiter);
+				//System.out.println(data);
 
 				if (data.length != 3) throw new BadConfigFormatException(". Invalid format on legend file. Error in loadRoomConfig()");
 
@@ -157,7 +158,8 @@ public class Board {
 			else if(data.endsWith("N")) direction.doorDirection = DoorDirection.NONE;
 			else throw new BadConfigFormatException(". Invalid characters on board. Error in convertToBoardCell()" );
 		}
-
+		
+		/*
 		switch (data.substring(0, 1)) {
 		case "C": return new BoardCell(direction.doorDirection, 'C');
 		case "K": return new BoardCell(direction.doorDirection, 'K');
@@ -179,7 +181,17 @@ public class Board {
 		default: throw new BadConfigFormatException("Invalid room character on the board."); 
 
 		}
-
+		*/
+		
+		char doorLetter = data.charAt(0);
+		if (!rooms.containsKey(doorLetter)) {
+			System.out.println(doorLetter);
+			throw new BadConfigFormatException("Invalid room character on the board.");
+		}
+		else {
+			return new BoardCell(direction.doorDirection, doorLetter);
+		}
+		
 	}
 
 	public void calcAdjacencies() {

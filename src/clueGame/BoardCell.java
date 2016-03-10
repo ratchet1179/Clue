@@ -64,13 +64,13 @@ public class BoardCell {
 	}
 
 	public boolean isWalkway() {
-		if(roomLetter == 'W' || roomLetter == 'w')
+		if(roomLetter == 'W')
 			return true;
 		return false;
 	}
 
 	public boolean isRoom() {
-		if(roomLetter != 'w' || roomLetter != 'W' || roomLetter != 'X')
+		if(roomLetter != 'W' || roomLetter != 'X')
 			return true;
 		return false;
 	}

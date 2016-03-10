@@ -20,14 +20,12 @@ public class FileInitTests {
 	public static final int NUM_ROWS = 22;
 	public static final int NUM_COLUMNS = 23;
 
-
 	private static Board board;
 
 	@BeforeClass
-	public static void setUp() throws FileNotFoundException, BadConfigFormatException{
+	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt");
 		board.initialize();
-
 	}
 
 	@Test
@@ -43,30 +41,30 @@ public class FileInitTests {
 		assertEquals("Guest Room", rooms.get('G'));
 		assertEquals("Master Bedroom", rooms.get('M'));
 		assertEquals("Kitchen", rooms.get('K'));
-		assertEquals("Walkway", rooms.get('w'));
+		assertEquals("Walkway", rooms.get('W'));
 		assertEquals("Closet", rooms.get('X'));
 		assertEquals("Joe's Room", rooms.get('J'));
 	}
 
 	@Test
 	public void testBoardDims() {
-		assertEquals(NUM_COLUMNS, board.getNumColumns());	
+		assertEquals(NUM_COLUMNS, board.getNumColumns());
 		assertEquals(NUM_ROWS, board.getNumRows());
 	}
 
 	@Test
 	public void testRoomInitials() {
-		
-		assertEquals('B', board.getCellAt(0, 0).getInitial());
-		assertEquals('D', board.getCellAt(0, 9).getInitial());
-		assertEquals('K', board.getCellAt(0, 15).getInitial());
-		assertEquals('P', board.getCellAt(7, 2).getInitial());
-		assertEquals('X', board.getCellAt(7, 9).getInitial());
-		assertEquals('M', board.getCellAt(8, 17).getInitial());
-		assertEquals('L', board.getCellAt(21, 0).getInitial());
-		assertEquals('S', board.getCellAt(18, 13).getInitial());
-		assertEquals('G', board.getCellAt(21, 22).getInitial());
-		assertEquals('J', board.getCellAt(9, 20).getInitial());
+
+		assertEquals('B', board.getCellAt(0, 0).getRoomLetter());
+		assertEquals('D', board.getCellAt(0, 9).getRoomLetter());
+		assertEquals('K', board.getCellAt(0, 15).getRoomLetter());
+		assertEquals('P', board.getCellAt(7, 2).getRoomLetter());
+		assertEquals('X', board.getCellAt(7, 9).getRoomLetter());
+		assertEquals('M', board.getCellAt(8, 17).getRoomLetter());
+		assertEquals('L', board.getCellAt(21, 0).getRoomLetter());
+		assertEquals('S', board.getCellAt(18, 13).getRoomLetter());
+		assertEquals('G', board.getCellAt(21, 22).getRoomLetter());
+		assertEquals('J', board.getCellAt(9, 20).getRoomLetter());
 	}
 
 	@Test
@@ -84,27 +82,27 @@ public class FileInitTests {
 		assertTrue(room.isDoorway());
 		assertEquals(DoorDirection.UP, room.getDoorDirection());
 		room = board.getCellAt(21, 12);
-		assertFalse(room.isDoorway());	
+		assertFalse(room.isDoorway());
 		BoardCell cell = board.getCellAt(16, 14);
-		assertFalse(cell.isDoorway());		
+		assertFalse(cell.isDoorway());
 
 	}
 
-	@Test (expected = BadConfigFormatException.class)
+	@Test(expected = BadConfigFormatException.class)
 	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 		Board board = new Board("ClueLayoutBadColumns.csv", "Clue_LegendStudent.txt");
 		board.loadRoomConfig();
 		board.loadBoardConfig();
 	}
 
-	@Test (expected = BadConfigFormatException.class)
+	@Test(expected = BadConfigFormatException.class)
 	public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
 		Board board = new Board("ClueLayoutBadRoom.csv", "Clue_LegendStudent.txt");
 		board.loadRoomConfig();
 		board.loadBoardConfig();
 	}
 
-	@Test (expected = BadConfigFormatException.class)
+	@Test(expected = BadConfigFormatException.class)
 	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 		Board board = new Board("Clue_LayoutStudent.csv", "ClueLegendBadFormat.txt");
 		board.loadRoomConfig();

@@ -33,7 +33,6 @@ public class BoardAdjTargetTests {
 		assertTrue(testList.contains(board.getCellAt(16, 16)));
 		assertTrue(testList.contains(board.getCellAt(15, 15)));
 		assertTrue(testList.contains(board.getCellAt(17, 15)));
-
 	}
 
 	//Purple

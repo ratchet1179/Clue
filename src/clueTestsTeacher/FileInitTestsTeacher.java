@@ -106,11 +106,11 @@ public class FileInitTestsTeacher {
 	// Test a few room cells to ensure the room initial is correct.
 	@Test
 	public void testRoomInitials() {
-		assertEquals('C', board.getCellAt(0, 0).getInitial());
-		assertEquals('R', board.getCellAt(4, 8).getInitial());
-		assertEquals('B', board.getCellAt(9, 0).getInitial());
-		assertEquals('O', board.getCellAt(21, 22).getInitial());
-		assertEquals('K', board.getCellAt(21, 0).getInitial());
+		assertEquals('C', board.getCellAt(0, 0).getRoomLetter());
+		assertEquals('R', board.getCellAt(4, 8).getRoomLetter());
+		assertEquals('B', board.getCellAt(9, 0).getRoomLetter());
+		assertEquals('O', board.getCellAt(21, 22).getRoomLetter());
+		assertEquals('K', board.getCellAt(21, 0).getRoomLetter());
 	}
 	
 	// Test that an exception is thrown for a bad config file

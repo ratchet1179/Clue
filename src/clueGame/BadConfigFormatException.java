@@ -1,13 +1,30 @@
 package clueGame;
 
-public class BadConfigFormatException extends Exception{
+import java.io.IOException;
+import java.io.PrintWriter;
 
-	private static String returnMessage = "Config file not formatted correctly";
-	private String detail;
+public class BadConfigFormatException extends Exception {
+	public static final String outputFile = "exceptionLogForClue.txt";
+	
+	public BadConfigFormatException() {
+		super();
+		writeException();
+	}
 
-
-	BadConfigFormatException(String detail) {
-		super(returnMessage + detail);
-		this.detail = detail;
+	public BadConfigFormatException(String string) {
+		super(string);
+		writeException();
+	}
+	
+	public void writeException() {
+		PrintWriter out;
+		try {
+			out = new PrintWriter(outputFile);
+			out.append(this.getMessage());
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 }

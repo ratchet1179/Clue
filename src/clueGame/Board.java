@@ -53,6 +53,7 @@ public class Board {
 	public void initialize() throws FileNotFoundException, BadConfigFormatException{
 		loadRoomConfig();
 		loadBoardConfig();
+		calcAdjacencies();
 	}
 
 
@@ -179,7 +180,8 @@ public class Board {
 		}
 		
 	}
-
+	
+	
 	public void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -212,17 +214,20 @@ public class Board {
 							adjacencyList.add(board[i - 1][j]);
 						else if (board[i - 1][j].isDoorway() && (board[i - 1][j]).getDoorDirection() == DoorDirection.DOWN)
 							adjacencyList.add(board[i - 1][j]);
-					} else if (j - 1 >= 0) {
+					}
+					if (j - 1 >= 0) {
 						if (board[i][j - 1].isWalkway()) 
 							adjacencyList.add(board[i][j - 1]);
 						else if (board[i][j - 1].isDoorway() && (board[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) 
 							adjacencyList.add(board[i][j - 1]);
-					} else if (i + 1 < numRows) {
+					}
+					if (i + 1 < numRows) {
 						if (board[i + 1][j].isWalkway()) 
 							adjacencyList.add(board[i + 1][j]);
 						else if (board[i + 1][j].isDoorway() && (board[i + 1][j]).getDoorDirection() == DoorDirection.UP) 
 							adjacencyList.add(board[i + 1][j]);
-					} else if (j + 1 < numColumns) {
+					}
+					if (j + 1 < numColumns) {
 						if (board[i][j + 1].isWalkway()) 
 							adjacencyList.add(board[i][j + 1]);
 						else if (board[i][j + 1].isDoorway() && (board[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) 
@@ -231,12 +236,16 @@ public class Board {
 				}
 
 				adjacencyMatrix.put(board[i][j], adjacencyList);
+				
+				if (i == 16 && j == 15){
+					System.out.println(adjacencyList);
+				}
 			}
 		}	
 	}
 
+	
 	public LinkedList<BoardCell> getAdjList(int i, int j) {
-		calcAdjacencies();
 		return adjacencyMatrix.get(board[i][j]);
 	}
 

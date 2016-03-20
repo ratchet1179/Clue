@@ -17,22 +17,31 @@ public class Board {
 	private static Map<Character, String> rooms;
 	private String boardFile;
 	private String legendFile;
+	private String playersFile;
+	private String weaponsFile;
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyMatrix;
 	private ArrayList<Player> players;
 
-
-	public Board(String boardFile, String legendFile) {
-		this.boardFile = boardFile;
-		this.legendFile = legendFile;
-		instatiateDataMembers();
-	}
-	
 	public Board() {
+		instatiateDataMembers();
 		boardFile = "Clue_LayoutTeacher.csv";
 		legendFile = "Clue_LegendTeacher.txt";
-		instatiateDataMembers();
+		playersFile = "CluePlayersTeacher.txt";
+		weaponsFile = "ClueWeaponsTeacher.txt"; 
+	}
+	
+	public Board(String boardFile, String legendFile) {
+		this(); //call regular constructor
+		this.boardFile = boardFile;
+		this.legendFile = legendFile;
+	}
+	
+	public Board(String boardFile, String legendFile, String playersFile, String weaponsFile) {
+		this(boardFile, legendFile); //call two-String constructor
+		this.playersFile = playersFile;
+		this.weaponsFile = weaponsFile;
 	}
 	
 	private void instatiateDataMembers() {
@@ -44,22 +53,6 @@ public class Board {
 	public void initialize() throws FileNotFoundException, BadConfigFormatException{
 		loadRoomConfig();
 		loadBoardConfig();
-	}
-
-	public static Map<Character, String> getRooms() {
-		return rooms;
-	}
-
-	public int getNumRows() {
-		return numRows;
-	}
-
-	public int getNumColumns() {
-		return numColumns;
-	}
-
-	public BoardCell getCellAt(int i, int j) {
-		return board[i][j];
 	}
 
 

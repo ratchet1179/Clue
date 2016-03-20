@@ -1,0 +1,6 @@
+Unoriginal MechE,red
+Stinky Physicist,yellow
+Sleep Deprived ChemE,green
+Lightly Charred EE,cyan
+CompSci Neckbeard,blue
+Heartless Petro,black

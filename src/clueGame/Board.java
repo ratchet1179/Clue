@@ -20,21 +20,25 @@ public class Board {
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyMatrix;
+	private ArrayList<Player> players;
 
 
 	public Board(String boardFile, String legendFile) {
 		this.boardFile = boardFile;
 		this.legendFile = legendFile;
-		adjacencyMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
-		rooms = new HashMap<Character, String>();
-
+		instatiateDataMembers();
 	}
-
+	
 	public Board() {
 		boardFile = "Clue_LayoutTeacher.csv";
 		legendFile = "Clue_LegendTeacher.txt";
+		instatiateDataMembers();
+	}
+	
+	private void instatiateDataMembers() {
 		adjacencyMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		rooms = new HashMap<Character, String>();
+		players = new ArrayList<Player>();
 	}
 
 	public void initialize() throws FileNotFoundException, BadConfigFormatException{
@@ -143,6 +147,22 @@ public class Board {
 		}
 
 
+	}
+	
+	public void loadConfigFiles() {
+		
+	}
+	
+	public void selectAnswer() {
+		
+	}
+	
+	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked) {
+		return null;
+	}
+	
+	public boolean checkAccusation(Solution accusation) {
+		return false;
 	}
 
 	public BoardCell stringToBoardCell(String data) throws BadConfigFormatException {

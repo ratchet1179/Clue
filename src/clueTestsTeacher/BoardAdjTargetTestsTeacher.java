@@ -19,7 +19,7 @@ public class BoardAdjTargetTestsTeacher {
 	// then do all the tests. 
 	private static Board board;
 	@BeforeClass
-	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
+	public static void setUp() {
 		board = new Board("Clue_LayoutTeacher.csv", "Clue_LegendTeacher.txt");
 		board.initialize();
 	}

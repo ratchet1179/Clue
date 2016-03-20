@@ -31,7 +31,7 @@ public class FileInitTestsTeacher {
 	private static Board board;
 	
 	@BeforeClass
-	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
+	public static void setUp() {
 		// Create a new Board using the valid files. Note that
 		// the default filenames must be attributes of the Board class. 
 		board = new Board();

@@ -23,7 +23,7 @@ public class FileInitTests {
 	private static Board board;
 
 	@BeforeClass
-	public static void setUp() throws FileNotFoundException, BadConfigFormatException {
+	public static void setUp() {
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt");
 		board.initialize();
 	}

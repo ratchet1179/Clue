@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.lang.reflect.Field;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,9 +11,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Board {
+	public final int NUM_PLAYERS = 6;
 	private int numColumns, numRows;
 	private BoardCell[][] board;
 	private static Map<Character, String> rooms;
@@ -50,15 +54,26 @@ public class Board {
 		players = new ArrayList<Player>();
 	}
 
-	public void initialize() throws FileNotFoundException, BadConfigFormatException{
+	public void initialize() {
+		try {
+			loadConfigFiles();
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		calcAdjacencies();
+	}
+	
+	public void loadConfigFiles() throws BadConfigFormatException {
 		loadRoomConfig();
 		loadBoardConfig();
-		calcAdjacencies();
+		loadPlayersConfig();
+		loadWeaponsConfig();
 	}
 
 
 	@SuppressWarnings("resource")
-	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException {
+	public void loadRoomConfig() throws BadConfigFormatException {
 		BufferedReader legendReader;
 		String line = "";
 		String delimiter = ",";
@@ -79,12 +94,14 @@ public class Board {
 
 				rooms.put(key, value);
 			}
+		} catch (FileNotFoundException e) {
+			System.out.println(legendFile + " not found");
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}	
 	}
 
-	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException {
+	public void loadBoardConfig() throws BadConfigFormatException {
 
 		ArrayList<ArrayList<BoardCell>> tempBoard = new ArrayList<ArrayList<BoardCell>>();
 		String line = "";
@@ -118,7 +135,7 @@ public class Board {
 			System.out.println("CSV File not found");
 		}
 		catch (IOException e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 
 		numRows = tempBoard.size();
@@ -143,7 +160,63 @@ public class Board {
 
 	}
 	
-	public void loadConfigFiles() {
+	public void loadPlayersConfig() throws BadConfigFormatException {
+		// SET UP LEGEND
+        FileReader reader;
+        try {
+            reader = new FileReader(playersFile);
+        } catch (FileNotFoundException e) {
+            System.out.println(playersFile + " not found");
+            return;
+        }
+
+        @SuppressWarnings("resource")
+		Scanner in = new Scanner(reader);
+        for (int i = 0; i < NUM_PLAYERS; i++) {
+        	if (!in.hasNextLine()) {
+        		throw new BadConfigFormatException("Not enough players in " + playersFile);
+        	}
+        	
+        	String playerLine = in.nextLine();
+        	String[] data = playerLine.split(",");
+        	//get player name
+        	String playerName = data[0];
+        	//get player color: invalid if color code does not exist
+        	Color playerColor;
+			try {
+				playerColor = convertColor(data[1]);
+			} catch (Exception e) {
+				throw new BadConfigFormatException("Invalid color in " + playersFile);
+			}
+			//get player row: invalid if out of bounds
+        	int playerRow = Integer.parseInt(data[2]);
+        	if (playerRow >= numRows || playerRow < 0) {
+        		throw new BadConfigFormatException("Invalid player row in " + playersFile);
+        	}
+        	//get player column: invalid if out of bounds
+        	int playerColumn = Integer.parseInt(data[3]);
+        	if (playerColumn >= numColumns || playerColumn < 0) {
+        		throw new BadConfigFormatException("Invalid player column in " + playersFile);
+        	}
+        	
+        	players.add(new Player(playerName, playerColor, playerRow, playerColumn));
+        }
+        
+        if (in.hasNextLine()) {
+        	throw new BadConfigFormatException("Too many players in " + playersFile);
+        }
+
+        in.close();
+	}
+	
+	public Color convertColor(String strColor) throws Exception {
+		Color color;
+		Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+		color = (Color)field.get(null);
+		return color;
+	}
+	
+	public void loadWeaponsConfig() throws BadConfigFormatException {
 		
 	}
 	

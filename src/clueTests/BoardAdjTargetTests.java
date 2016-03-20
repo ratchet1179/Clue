@@ -28,6 +28,7 @@ public class BoardAdjTargetTests {
 	@Test
 	public void testSpaceOnlyWalkwaysAdj() {
 		LinkedList<BoardCell> testList = board.getAdjList(16, 15);
+		System.out.println(testList);
 		assertEquals(4, testList.size());
 		assertTrue(testList.contains(board.getCellAt(16, 14)));
 		assertTrue(testList.contains(board.getCellAt(16, 16)));

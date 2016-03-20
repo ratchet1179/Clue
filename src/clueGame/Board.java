@@ -278,5 +278,22 @@ public class Board {
 	public Set<BoardCell> getTargets() {
 		return targets;
 	}
+	
+	public static Map<Character, String> getRooms() {
+		return rooms;
+	}
+
+	public int getNumRows() {
+		return numRows;
+	}
+
+	public int getNumColumns() {
+		return numColumns;
+	}
+
+	public BoardCell getCellAt(int i, int j) {
+		return board[i][j];
+	}
+
 
 }

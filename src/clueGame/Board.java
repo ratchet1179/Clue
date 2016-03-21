@@ -309,10 +309,6 @@ public class Board {
 				}
 
 				adjacencyMatrix.put(board[i][j], adjacencyList);
-				
-				if (i == 16 && j == 15){
-					System.out.println(adjacencyList);
-				}
 			}
 		}	
 	}
@@ -377,5 +373,7 @@ public class Board {
 		return board[i][j];
 	}
 
-
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
 }

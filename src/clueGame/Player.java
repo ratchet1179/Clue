@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Point;
 
 public class Player {
 	public static final int MAX_CARDS = 18;
@@ -20,5 +21,33 @@ public class Player {
 
 	public Card disproveSuggestion(Solution suggestion) {
 		return null;
+	}
+	
+	public String getPlayerName() {
+		return playerName;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getColumn() {
+		return column;
+	}
+	
+	public Point getLocation() {
+		return new Point(row, column);
+	}
+
+	public Card[] getMyCards() {
+		return myCards;
+	}
+
+	public Card[] getSeenCards() {
+		return seenCards;
 	}
 }

@@ -1,1 +1,1 @@
-. Invalid format on legend file. Error in loadRoomConfig()
+Invalid player row in CluePlayersStudent_InvalidLocation1.txt

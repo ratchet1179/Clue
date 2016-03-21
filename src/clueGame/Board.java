@@ -64,11 +64,11 @@ public class Board {
 		calcAdjacencies();
 	}
 	
-	public void loadConfigFiles() throws BadConfigFormatException {
+	public void loadConfigFiles() throws BadConfigFormatException{
 		loadRoomConfig();
 		loadBoardConfig();
 		loadPlayersConfig();
-		loadWeaponsConfig();
+		loadWeaponsConfig();		
 	}
 
 
@@ -95,12 +95,13 @@ public class Board {
 				rooms.put(key, value);
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println(legendFile + " not found");
+			throw new BadConfigFormatException(legendFile + " not found");
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			throw new BadConfigFormatException(e.getMessage());
 		}	
 	}
 
+	@SuppressWarnings("resource")
 	public void loadBoardConfig() throws BadConfigFormatException {
 
 		ArrayList<ArrayList<BoardCell>> tempBoard = new ArrayList<ArrayList<BoardCell>>();
@@ -132,10 +133,10 @@ public class Board {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("CSV File not found");
+			throw new BadConfigFormatException("CSV File not found");
 		}
 		catch (IOException e) {
-			System.out.println(e.getMessage());
+			throw new BadConfigFormatException(e.getMessage());
 		}
 
 		numRows = tempBoard.size();
@@ -166,8 +167,7 @@ public class Board {
         try {
             reader = new FileReader(playersFile);
         } catch (FileNotFoundException e) {
-            System.out.println(playersFile + " not found");
-            return;
+            throw new BadConfigFormatException(playersFile + " not found");
         }
 
         @SuppressWarnings("resource")
@@ -179,6 +179,11 @@ public class Board {
         	
         	String playerLine = in.nextLine();
         	String[] data = playerLine.split(",");
+        	
+        	if (data.length != 4) { //If there are not four elements in data
+				throw new BadConfigFormatException("Invalid format in " + playersFile);
+			}
+        	
         	//get player name
         	String playerName = data[0];
         	//get player color: invalid if color code does not exist

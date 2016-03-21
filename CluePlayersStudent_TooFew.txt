@@ -1,0 +1,5 @@
+Unoriginal MechE,red,0,7
+Stinky Physicist,yellow,0,14
+Sleep Deprived ChemE,green,7,22
+Lightly Charred EE,cyan,16,22
+CompSci Neckbeard,blue,21,14

@@ -137,6 +137,9 @@ public class GameSetupTests {
 	@Test
 	public void TestCardAttributes() {
 		Set<Card> cards = board.getCards();
+		for (Card test : cards) {
+			System.out.println(test.getCardName() + "," + test.getCardType());
+		}
 		
 		Card mechE = new Card("Unoriginal MechE", CardType.PERSON);
 		Card quadCopter = new Card("QuadCopter", CardType.WEAPON);

@@ -50,4 +50,6 @@ public class Player {
 	public Card[] getSeenCards() {
 		return seenCards;
 	}
+	
+	
 }

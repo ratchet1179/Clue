@@ -6,6 +6,6 @@ S,Showroom,Card
 G,Guest Room,Card
 M,Master Bedroom,Card
 K,Kitchen,Card
-J,Joe's Room, Card
+J,Joe's Room,Card
 W,Walkway,Other
 X,Closet,Other

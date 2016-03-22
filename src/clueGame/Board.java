@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ public class Board {
 	private int numColumns, numRows;
 	private BoardCell[][] board;
 	private static Map<Character, String> rooms;
+	private Set<String> cardRooms;
 	private String boardFile;
 	private String legendFile;
 	private String playersFile;
@@ -55,6 +57,9 @@ public class Board {
 		adjacencyMatrix = new HashMap<BoardCell, LinkedList<BoardCell>>();
 		rooms = new HashMap<Character, String>();
 		players = new ArrayList<Player>();
+		cardRooms = new HashSet<String>();
+		weapons = new ArrayList<String>();
+		cards = new HashSet<Card>();
 	}
 
 	public void initialize() {
@@ -91,12 +96,25 @@ public class Board {
 				// use comma as separator
 				String[] data = line.split(delimiter);
 
-				if (data.length != 3) throw new BadConfigFormatException(". Invalid format on legend file. Error in loadRoomConfig()");
+				if (data.length != 3) {
+					throw new BadConfigFormatException("Invalid format in legend file.");
+				}
 
-				char key = data[0].toCharArray()[0];
-				String value = data[1].trim();
+				char roomID = data[0].toCharArray()[0];
+				String roomName = data[1].trim();
+				
+				String type = data[2].trim();
+				if (type.equals("Card")) {
+					cardRooms.add(roomName);
+				}
+				else if (type.equals("Other")) {
+					//do nothing
+				}
+				else {
+					throw new BadConfigFormatException("Invalid format in legend file.");
+				}
 
-				rooms.put(key, value);
+				rooms.put(roomID, roomName);
 			}
 		} catch (FileNotFoundException e) {
 			throw new BadConfigFormatException(legendFile + " not found");
@@ -286,7 +304,15 @@ public class Board {
 	}
 	
 	private void setUpCards() {
-		
+		for (Player person : players) {
+			cards.add(new Card(person.getPlayerName(), CardType.PERSON));
+		}
+		for (String weapon : weapons) {
+			cards.add(new Card(weapon, CardType.WEAPON));
+		}
+		for (String roomName : cardRooms) {
+			cards.add(new Card(roomName, CardType.ROOM));
+		}
 	}
 	
 	public void calcAdjacencies() {

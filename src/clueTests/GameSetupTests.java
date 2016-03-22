@@ -3,6 +3,8 @@ package clueTests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -10,6 +12,8 @@ import org.junit.Test;
 
 import clueGame.BadConfigFormatException;
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.Player;
 
 import java.awt.Color;
@@ -23,6 +27,8 @@ public class GameSetupTests {
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent.txt", "ClueWeaponsStudent.txt");
 		board.initialize();
 	}
+	
+	//---------------------PLAYER TESTS---------------------------------
 	
 	@Test
 	public void TestCorrectPlayerAttributes() {
@@ -57,45 +63,87 @@ public class GameSetupTests {
 	
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestTooFewPlayers() throws BadConfigFormatException {
+	public void TestTooFewPlayers() throws BadConfigFormatException { // Exception test for a file with an insufficient number of players
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent_TooFew.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestTooManyPlayers() throws BadConfigFormatException {
+	public void TestTooManyPlayers() throws BadConfigFormatException { // Exception test for a file with an excessive number of players 
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent_TooMany.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestPlayersIncorrectFormat() throws BadConfigFormatException {
+	public void TestPlayersIncorrectFormat() throws BadConfigFormatException { // // Exception test for a file with bad format
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent_BadFormat.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestPlayersMissingFile() throws BadConfigFormatException {
+	public void TestPlayersMissingFile() throws BadConfigFormatException { // Exception test for a file that does not exist
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "THIS_FILE_SHOULD_BE_MISSING.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestPlayersInvalidLocationNegativeLocation() throws BadConfigFormatException {
+	public void TestPlayersInvalidLocationNegativeLocation() throws BadConfigFormatException { // Exception test for a file with a negative starting location for a player
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent_InvalidLocation1.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestPlayersInvalidLocationExceedsBounds() throws BadConfigFormatException {
+	public void TestPlayersInvalidLocationExceedsBounds() throws BadConfigFormatException { // Exception test for a file with an invalid location for a player
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent_InvalidLocation2.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
 	@Test(expected = BadConfigFormatException.class)
-	public void TestPlayersInvalidColor() throws BadConfigFormatException {
+	public void TestPlayersInvalidColor() throws BadConfigFormatException { // Exception test for a file with an invalid for a player
 		board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent_BadColor.txt", "ClueWeaponsStudent.txt");
 		board.loadConfigFiles();
 	}
 	
+	//--------------------------------CARD TESTS ------------------------------------------
+	
+	@Test
+	public void TestCardCreation() {
+		Set<Card> cards = board.getCards();
+		assertEquals(21, cards.size());
+		
+		int numPeople = 0;
+		int numWeapons = 0;
+		int numRooms = 0;
+		for (Card testCard : cards) {
+			if (testCard.getCardType() == CardType.PERSON) {
+				numPeople++;
+			}
+			else if (testCard.getCardType() == CardType.WEAPON) {
+				numWeapons++;
+			}
+			else if (testCard.getCardType() == CardType.ROOM) {
+				numRooms++;
+			}
+			else {
+				fail("Unexpected card type.");
+			}
+		}
+		
+		assertEquals(6, numPeople);
+		assertEquals(6, numWeapons);
+		assertEquals(9, numRooms);
+	}
+	
+	@Test
+	public void TestCardAttributes() {
+		Set<Card> cards = board.getCards();
+		
+		Card mechE = new Card("Unoriginal MechE", CardType.PERSON);
+		Card quadCopter = new Card("QuadCopter", CardType.WEAPON);
+		Card bathroom = new Card("Bathroom", CardType.ROOM);
+		
+		assertTrue(cards.contains(mechE));
+		assertTrue(cards.contains(quadCopter));
+		assertTrue(cards.contains(bathroom));
+	}
 }

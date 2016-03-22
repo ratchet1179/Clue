@@ -16,6 +16,7 @@ import java.util.Set;
 
 public class Board {
 	public final int NUM_PLAYERS = 6;
+	public final int NUM_WEAPONS = 6;
 	private int numColumns, numRows;
 	private BoardCell[][] board;
 	private static Map<Character, String> rooms;
@@ -27,6 +28,8 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyMatrix;
 	private ArrayList<Player> players;
+	private ArrayList<String> weapons;
+	private Set<Card> cards;
 
 	public Board() {
 		instatiateDataMembers();
@@ -61,6 +64,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 		
+		setUpCards();
 		calcAdjacencies();
 	}
 	
@@ -222,7 +226,29 @@ public class Board {
 	}
 	
 	public void loadWeaponsConfig() throws BadConfigFormatException {
-		
+		// SET UP WEAPONS
+        FileReader reader;
+        try {
+            reader = new FileReader(weaponsFile);
+        } catch (FileNotFoundException e) {
+        	throw new BadConfigFormatException("Could not find " + weaponsFile);
+        }
+
+        @SuppressWarnings("resource")
+		Scanner in = new Scanner(reader);
+        for(int i = 0; i < NUM_WEAPONS; i++) {
+        	if (!in.hasNextLine()) {
+        		throw new BadConfigFormatException("Not enough weapons in " + weaponsFile);
+        	}
+        	String weaponName = in.nextLine();
+        	weapons.add(weaponName);
+        }
+        
+        if (in.hasNextLine()) {
+        	throw new BadConfigFormatException("Too many weapons in " + weaponsFile);
+        }
+        
+        in.close();
 	}
 	
 	public void selectAnswer() {
@@ -259,6 +285,9 @@ public class Board {
 		
 	}
 	
+	private void setUpCards() {
+		
+	}
 	
 	public void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) {
@@ -380,5 +409,9 @@ public class Board {
 
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+
+	public Set<Card> getCards() {
+		return cards;
 	}
 }

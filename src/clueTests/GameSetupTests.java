@@ -24,6 +24,7 @@ public class GameSetupTests {
     public void setUp() {
         board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent.txt", "ClueWeaponsStudent.txt");
         board.initialize();
+        //deal cards is not included in this section because certain tests are dependent on its absence
     }
 
 	//---------------------PLAYER TESTS---------------------------------

@@ -36,39 +36,40 @@ public class GameActionTests {
     
     @Test
     public void testIncorrectPerson() {
-    	Solution accusation = board.getSolution();
+    	Solution accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unfunny Name";
+    	System.out.println(board.getSolution());
+    	System.out.println(accusation);
     	assertFalse(board.checkAccusation(accusation));
     }
     
     @Test
     public void testIncorrectWeapon() {
-    	Solution accusation = board.getSolution();
+    	Solution accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unoriginal Weapon";
     	assertFalse(board.checkAccusation(accusation));
     }
     
     @Test
     public void testIncorrectRoom() {
-    	Solution accusation = board.getSolution();
+    	Solution accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.room = "Generic Room";
-    	System.out.println(board.getSolution());
     	assertFalse(board.checkAccusation(accusation));
     }
     
     @Test
     public void testTwoWrong() { // Test case where two aspects of the accusation are false
-    	Solution accusation = board.getSolution();
+    	Solution accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unfunny Name";
     	accusation.person = "Unoriginal Weapon";
     	assertFalse(board.checkAccusation(accusation));
     	
-    	accusation = board.getSolution();
+    	accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unfunny Name";
     	accusation.room = "Generic Room";
     	assertFalse(board.checkAccusation(accusation));
     	
-    	accusation = board.getSolution();
+    	accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unoriginal Weapon";
     	accusation.room = "Generic Room";
     	assertFalse(board.checkAccusation(accusation));
@@ -76,7 +77,7 @@ public class GameActionTests {
     
     @Test
     public void testAllWrong() {
-    	Solution accusation = board.getSolution();
+    	Solution accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unfunny Name";
     	accusation.person = "Unoriginal Weapon";
     	accusation.room = "Generic Room";

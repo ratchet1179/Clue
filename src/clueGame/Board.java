@@ -280,9 +280,9 @@ public class Board {
 	}
 	
 	public boolean checkAccusation(Solution accusation) {
-		if (accusation.person == solution.person &&
-			accusation.room == solution.room &&
-			accusation.weapon == solution.weapon) {
+		if (accusation.person.equals(solution.person) &&
+			accusation.room.equals(solution.room) &&
+			accusation.weapon.equals(solution.weapon)) {
 			return true;
 		}
 		return false;

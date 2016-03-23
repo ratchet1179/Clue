@@ -51,4 +51,9 @@ public class Player {
     public ArrayList<Card> getSeenCards() {
         return seenCards;
     }
+    
+    //for the sake of testing:
+    public void setMyCards(ArrayList<Card> myCards) {
+		this.myCards = myCards;
+	}
 }

@@ -20,7 +20,24 @@ import java.awt.Point;
 
 public class GameActionTests {
     private static Board board;
-
+    public static Player tester;
+    public static Card mechE;
+    public static Card quad;
+    public static Card bathroom;
+    public static Card [] testCards;
+    
+    @BeforeClass
+    public static void initialSetUp() {
+    	tester = new Player("Unoriginal MechE", Color.red, 0, 7);
+    	mechE = new Card("Unoriginal MechE", CardType.PERSON);
+    	quad = new Card("QuadCopter", CardType.WEAPON);
+    	bathroom = new Card("Bathroom", CardType.ROOM);
+    	Card [] cards = {mechE, new Card("Stinky Physicist", CardType.PERSON),
+    						quad, new Card("Loncapa Red Box", CardType.WEAPON),
+    						bathroom, new Card("Poolhouse", CardType.ROOM)};
+    	testCards = cards;
+    }
+    
     @Before
     public void setUp() {
         board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent.txt", "ClueWeaponsStudent.txt");
@@ -82,5 +99,61 @@ public class GameActionTests {
     	accusation.person = "Unoriginal Weapon";
     	accusation.room = "Generic Room";
     	assertFalse(board.checkAccusation(accusation));
+    }
+    
+    @Test
+    public void testSuggestionOneCorrect() {
+    	Solution suggestion = new Solution("Unoriginal MechE", "blah", "bleh");
+    	assertEquals(tester.disproveSuggestion(suggestion), mechE);
+
+    	suggestion = new Solution("blah", "QuadCopter", "bleh");
+    	assertEquals(tester.disproveSuggestion(suggestion), quad);
+    	
+    	suggestion = new Solution("blah", "bleh", "Bathroom");
+    	assertEquals(tester.disproveSuggestion(suggestion), bathroom);    	
+    }
+    
+    @Test
+    public void testSuggestionMultipleCorrect() {
+    	int mechEReturned = 0;
+    	int quadReturned = 0;
+    	int bathroomReturned = 0;
+    	
+		for (int i = 0; i < 1000; i++) {
+			Solution suggestion = new Solution("Unoriginal MechE",
+					"QuadCopter", "blah");
+			Card result = tester.disproveSuggestion(suggestion);
+			if (result.equals(mechE)) {
+				mechEReturned++;
+			} else if (result.equals(quad)) {
+				quadReturned++;
+			} else {
+				fail();
+			}
+
+			suggestion = new Solution("blah", "QuadCopter", "Bathroom");
+			result = tester.disproveSuggestion(suggestion);
+			if (result.equals(quad)) {
+				quadReturned++;
+			} else if (result.equals(bathroom)) {
+				bathroomReturned++;
+			} else {
+				fail();
+			}
+
+			suggestion = new Solution("Unoriginal MechE", "blah", "Bathroom");
+			result = tester.disproveSuggestion(suggestion);
+			if (result.equals(mechE)) {
+				mechEReturned++;
+			} else if (result.equals(bathroom)) {
+				bathroomReturned++;
+			} else {
+				fail();
+			}
+		}
+		
+		assertTrue(mechEReturned > 0);
+		assertTrue(quadReturned > 0);
+		assertTrue(bathroomReturned > 0);
     }
 }

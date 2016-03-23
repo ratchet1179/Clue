@@ -280,6 +280,11 @@ public class Board {
 	}
 	
 	public boolean checkAccusation(Solution accusation) {
+		if (accusation.person == solution.person &&
+			accusation.room == solution.room &&
+			accusation.weapon == solution.weapon) {
+			return true;
+		}
 		return false;
 	}
 
@@ -335,6 +340,7 @@ public class Board {
             int randIndex = rng.nextInt(cards.size());
             Card cardToAdd = (Card) cards.toArray()[randIndex];
             nextPlayer.getSeenCards().add(cardToAdd);
+            nextPlayer.getMyCards().add(cardToAdd);
             cards.remove(cardToAdd); // remove the card from the deck once its in someone's hand
         }
     }

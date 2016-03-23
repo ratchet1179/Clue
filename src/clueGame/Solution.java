@@ -10,4 +10,10 @@ public class Solution {
 		this.room = room;
 		this.weapon = weapon;
 	}
+
+	@Override
+	public String toString() {
+		return "Solution [person=" + person + ", room=" + room + ", weapon="
+				+ weapon + "]";
+	}
 }

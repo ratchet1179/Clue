@@ -321,9 +321,11 @@ public class Board {
         Random rng = new Random();
         // put cards into solution, removing them from the list
         String solutionPerson = players.get(rng.nextInt(players.size())).getPlayerName();
+        cards.remove(new Card(solutionPerson, CardType.PERSON));
         String solutionWeapon = weapons.get(rng.nextInt(weapons.size()));
-        Object[] tempRoomArray = rooms.values().toArray();
-        String solutionRoom = (String) tempRoomArray[rng.nextInt(tempRoomArray.length)];
+        cards.remove(new Card(solutionWeapon, CardType.WEAPON));
+        String solutionRoom = (new ArrayList<String>(cardRooms)).get(rng.nextInt(cardRooms.size()));
+        cards.remove(new Card(solutionRoom, CardType.ROOM));
         setSolution(new Solution(solutionPerson, solutionRoom, solutionWeapon));
         // distribute remaining cards to the players
         int playerNumber = 0;

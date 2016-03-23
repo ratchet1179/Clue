@@ -1,8 +1,149 @@
-$ git log
+REPOSITORY USED: standard (the only repository present)
 
-This project was done with pair programming so 
-only one git local repository used
-Collaborator: Dristen Juhl
+commit d221d087f57801133390203437c87bc248bec603
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 22:32:09 2016 -0600
+
+    Final commenting/cleanup before submission
+
+commit a526b68acca39bcc9f237d0b782c8719f4f020b6
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 22:25:49 2016 -0600
+
+    checkAccusation tests now pass
+
+commit c6271b651ef7f7daf8a80323646669516489beab
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 22:21:40 2016 -0600
+
+    Completed failing tests for checkAccusation method
+
+commit dd30094efa207124eab1505efa6b83e650292cd8
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Tue Mar 22 21:51:52 2016 -0600
+
+    Completed implementing card dealing
+
+commit 08ee813f0d1db406a17e606fadb3bce905d30628
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Tue Mar 22 21:26:41 2016 -0600
+
+    Finished implementing card dealing, working out minor bugs
+
+commit ec51921edf444ce5cd5b736fdcddbe49f915f7f1
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Tue Mar 22 20:37:31 2016 -0600
+
+    Finished writing failing tests for the dealing algorithm
+
+commit 85273235dfd572ce4b5435bf41f2d97295dd61bc
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 12:16:11 2016 -0600
+
+    Added additional setup files
+
+commit ae2b045a039af8cc711730ab644acb4d60ad477d
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 12:15:57 2016 -0600
+
+    Tests for players and cards now pass.
+
+commit 97ff4a80dba66555d9c43de16a46f326b7fc9065
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 11:38:12 2016 -0600
+
+    Completed failing tests for card creation
+
+commit 7f6bfc78a31f415f761d79afaeb24a52d1987038
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Mon Mar 21 16:38:24 2016 -0600
+
+    Completed failing tests for Player reading
+
+commit 097eed782f268ad6a953aeb6cb121ed0e9aa5bb1
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Mon Mar 21 15:50:52 2016 -0600
+
+    Added failing tests for player attributes
+
+commit 9fb184cdcaffec91f7ba3257158b96eb6d397098
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Mar 20 17:28:44 2016 -0600
+
+    Streamlined exception handling in config methods
+
+commit cffe95f12f621ae2f4b3a593480c0e79f771d8cb
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Mar 20 16:35:27 2016 -0600
+
+    Fixed glaring issue in algorithm; all tests now functional.
+
+commit 27cfed8ab819db44a01742b23d113f8c05e8d639
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Mar 20 15:22:45 2016 -0600
+
+    Working on making all tests functional.
+
+commit cd08d879aa7d3eb38c562008b375c765a67d7f4e
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Mar 20 15:15:33 2016 -0600
+
+    Testing various constructor changes
+
+commit 07bd9d32a00c5e382f8e5135763812a8509843cd
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Mar 20 14:32:03 2016 -0600
+
+    Added skeletons for new required classes
+
+commit 40a415acd0cb1120ada43c8db9935cff3128588d
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 10 12:17:17 2016 -0700
+
+    Refactoring, fixing variable names, code cleanup
+
+commit 85f06e79109574000b32338441044431a3189daf
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 10 11:57:42 2016 -0700
+
+    Refactorization: itialize no longer hardcoded
+
+commit 523c593c9fd1f73a6748f9013ad5581ebb7263a4
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 8 12:01:54 2016 -0700
+
+    Added a supplementary test
+
+commit 3f199138d0033aa7d1694cdad5441f8b8635830c
+Merge: c3088bc 1d9803d
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Tue Mar 8 11:32:36 2016 -0700
+
+    Merge branch 'master' of https://github.com/ratchet1179/Clue
+
+commit c3088bc73e937857835699e76a10e973e0316e12
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Tue Mar 8 11:32:31 2016 -0700
+
+    merge handling
+
+commit 47d694758b745397223f26acc3f21f796d31ed0f
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Tue Mar 8 11:27:31 2016 -0700
+
+    Changed file names and got rid of .project in gitignore
+
+commit 1d9803d9bd29614cff55f7538fa82f391f03d091
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 8 11:24:09 2016 -0700
+
+    Initial commit
+
+commit 28bc451cb0e286e1ba088b9b06e0bf0929060a41
+Author: Shawn Andrew <sandrew@mines.edu>
+Date:   Sun Mar 6 17:26:41 2016 -0700
+
+    added new room and tests
 
 commit 485cb5ade74e68501e768338e866c0f50abe258d
 Author: Shawn Andrew <sandrew@mines.edu>

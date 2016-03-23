@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -70,6 +69,7 @@ public class Board {
 		}
 		
 		setUpCards();
+		dealCards();
 		calcAdjacencies();
 	}
 	
@@ -183,7 +183,8 @@ public class Board {
 
 	}
 	
-	public void loadPlayersConfig() throws BadConfigFormatException {
+	@SuppressWarnings("resource")
+    public void loadPlayersConfig() throws BadConfigFormatException {
 		// SET UP LEGEND
         FileReader reader;
         try {
@@ -192,7 +193,6 @@ public class Board {
             throw new BadConfigFormatException(playersFile + " not found");
         }
 
-        @SuppressWarnings("resource")
 		Scanner in = new Scanner(reader);
         for (int i = 0; i < NUM_PLAYERS; i++) {
         	if (!in.hasNextLine()) {
@@ -243,7 +243,8 @@ public class Board {
 		return color;
 	}
 	
-	public void loadWeaponsConfig() throws BadConfigFormatException {
+	@SuppressWarnings("resource")
+    public void loadWeaponsConfig() throws BadConfigFormatException {
 		// SET UP WEAPONS
         FileReader reader;
         try {
@@ -252,7 +253,6 @@ public class Board {
         	throw new BadConfigFormatException("Could not find " + weaponsFile);
         }
 
-        @SuppressWarnings("resource")
 		Scanner in = new Scanner(reader);
         for(int i = 0; i < NUM_WEAPONS; i++) {
         	if (!in.hasNextLine()) {
@@ -440,4 +440,9 @@ public class Board {
 	public Set<Card> getCards() {
 		return cards;
 	}
+
+    public void dealCards() {
+        // TODO 
+        
+    }
 }

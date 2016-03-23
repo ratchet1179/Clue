@@ -1,1 +1,1 @@
-Invalid player row in CluePlayersStudent_InvalidLocation1.txt
+Invalid format in CluePlayersStudent_BadFormat.txt

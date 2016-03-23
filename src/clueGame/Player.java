@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Player {
 	public static final int MAX_CARDS = 18;
@@ -9,8 +10,8 @@ public class Player {
 	private int row;
 	private int column;
 	private Color color;
-	private Card [] myCards = new Card[MAX_CARDS];
-	private Card [] seenCards = new Card[MAX_CARDS];
+	private ArrayList<Card> myCards = new ArrayList<Card>();
+	private ArrayList<Card> seenCards = new ArrayList<Card>();
 	
 	public Player(String playerName, Color color, int row, int column) {
 		this.playerName = playerName;
@@ -43,13 +44,11 @@ public class Player {
 		return new Point(row, column);
 	}
 
-	public Card[] getMyCards() {
-		return myCards;
-	}
+    public ArrayList<Card> getMyCards() {
+        return myCards;
+    }
 
-	public Card[] getSeenCards() {
-		return seenCards;
-	}
-	
-	
+    public ArrayList<Card> getSeenCards() {
+        return seenCards;
+    }
 }

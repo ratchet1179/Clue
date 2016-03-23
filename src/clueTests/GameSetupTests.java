@@ -148,23 +148,31 @@ public class GameSetupTests {
     // Test that cards are dealt correctly
     @Test
     public void testDealingCards() {
-        // cards are dealt in initialize(), called in the @Before method above
+        board.dealCards(); // TODO should be in initialize?
+        // test that there are three cards, one of each type, in the solution
+        assertTrue(board.getSolution().person != null);
+        assertTrue(board.getSolution().weapon != null);
+        assertTrue(board.getSolution().room != null);
         // as we hand out cards, they should be removed from the deck set named "cards". when its empty, they're all dealt
         assertTrue(board.getCards().isEmpty());
         // everyone should have the same number of cards, within one of each other
         for (int i = 0; i < board.getPlayers().size() - 2; i++) {
             Player currentPlayer = board.getPlayers().get(i);
             Player nextPlayer = board.getPlayers().get(i + 1);
-            assertTrue(currentPlayer.getSeenCards().length != 0); // shouldn't be empty
-            assertTrue(nextPlayer.getSeenCards().length != 0); // shouldn't be empty
-            assertTrue(Math.abs(currentPlayer.getSeenCards().length - nextPlayer.getSeenCards().length) < 2); 
+            assertTrue(currentPlayer.getSeenCards().size() != 0); // shouldn't be empty
+            assertTrue(nextPlayer.getSeenCards().size() != 0); // shouldn't be empty
+            assertTrue(Math.abs(currentPlayer.getSeenCards().size() - nextPlayer.getSeenCards().size()) < 2); 
         }
         
         // make sure all the players cards are unique
         for (int i = 0; i < board.getPlayers().size() - 1; i++) {
             Player currentPlayer = board.getPlayers().get(i);
-            for (int j = 0; j < currentPlayer.getSeenCards().length; j++) {
-                Card currentCard = currentPlayer.getSeenCards()[j];
+            for (int j = 0; j < currentPlayer.getSeenCards().size(); j++) {
+                Card currentCard = currentPlayer.getSeenCards().get(j);
+                // make sure the current card isn't in the solution
+                assertTrue(currentCard.getCardName() != board.getSolution().person);
+                assertTrue(currentCard.getCardName() != board.getSolution().weapon);
+                assertTrue(currentCard.getCardName() != board.getSolution().room);
                 for (int k = 0; k < i; k++) {
                     assertTrue(!Arrays.asList(board.getPlayers().get(k).getSeenCards()).contains(currentCard)); // this mess 
                                                     // sees if the current card is in the seen array for the current player

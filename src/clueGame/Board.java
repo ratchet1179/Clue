@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -31,6 +32,7 @@ public class Board {
 	private ArrayList<Player> players;
 	private ArrayList<String> weapons;
 	private Set<Card> cards;
+	private Solution solution;
 
 	public Board() {
 		instatiateDataMembers();
@@ -69,7 +71,7 @@ public class Board {
 		}
 		
 		setUpCards();
-		dealCards();
+		//dealCards();
 		calcAdjacencies();
 	}
 	
@@ -315,6 +317,26 @@ public class Board {
 		}
 	}
 	
+    public void dealCards() {
+        Random rng = new Random();
+        // put cards into solution, removing them from the list
+        String solutionPerson = players.get(rng.nextInt(players.size())).getPlayerName();
+        String solutionWeapon = weapons.get(rng.nextInt(weapons.size()));
+        Object[] tempRoomArray = rooms.values().toArray();
+        String solutionRoom = (String) tempRoomArray[rng.nextInt(tempRoomArray.length)];
+        setSolution(new Solution(solutionPerson, solutionRoom, solutionWeapon));
+        // distribute remaining cards to the players
+        int playerNumber = 0;
+        int originalSize = cards.size();
+        for (int i = 0; i < originalSize; i++) {
+            Player nextPlayer = players.get(playerNumber++ % players.size());
+            int randIndex = rng.nextInt(cards.size());
+            Card cardToAdd = (Card) cards.toArray()[randIndex];
+            nextPlayer.getSeenCards().add(cardToAdd);
+            cards.remove(cardToAdd); // remove the card from the deck once its in someone's hand
+        }
+    }
+	
 	public void calcAdjacencies() {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -441,8 +463,12 @@ public class Board {
 		return cards;
 	}
 
-    public void dealCards() {
-        // TODO 
-        
+    public Solution getSolution() {
+        return solution;
     }
+
+    public void setSolution(Solution solution) {
+        this.solution = solution;
+    }
+
 }

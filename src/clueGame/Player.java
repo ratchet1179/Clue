@@ -48,7 +48,7 @@ public class Player {
 	
 	@Override
 	public String toString() {
-		return "Player [playerName=" + playerName + "]";
+		return "Player [playerName=" + playerName + ", myCards=" + myCards + "]";
 	}
 
 	public String getPlayerName() {

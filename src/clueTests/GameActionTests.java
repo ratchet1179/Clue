@@ -68,8 +68,6 @@ public class GameActionTests {
     public void testIncorrectPerson() { // tests a solution with an incorrect person component
     	Solution accusation = new Solution(board.getSolution().person, board.getSolution().weapon, board.getSolution().room);
     	accusation.person = "Unfunny Name";
-    	//System.out.println(board.getSolution());
-    	//System.out.println(accusation);
     	assertFalse(board.checkAccusation(accusation));
     }
     
@@ -175,32 +173,32 @@ public class GameActionTests {
         ArrayList<Card> cards = new ArrayList<Card>();
 
         npc1 = new ComputerPlayer("npc1", Color.red, 0, 0);
-        cards.clear();
+        cards = new ArrayList<Card>();
         cards.add(new Card("John", CardType.PERSON));
         npc1.setMyCards(cards);
 
         npc2 = new ComputerPlayer("npc2", Color.red, 0, 0);
-        cards.clear();
+        cards = new ArrayList<Card>();
         cards.add(new Card("Joe", CardType.PERSON));
         npc2.setMyCards(cards);
 
         npc3 = new ComputerPlayer("npc3", Color.red, 0, 0);
-        cards.clear();
+        cards = new ArrayList<Card>();
         cards.add(new Card("Jack", CardType.PERSON));
         npc3.setMyCards(cards);
 
         npc4 = new ComputerPlayer("npc4", Color.red, 0, 0);
-        cards.clear();
+        cards = new ArrayList<Card>();
         cards.add(new Card("Jane", CardType.PERSON));
         npc4.setMyCards(cards);
 
         npc5 = new ComputerPlayer("npc5", Color.red, 0, 0);
-        cards.clear();
+        cards = new ArrayList<Card>();
         cards.add(new Card("Jill", CardType.PERSON));
         npc5.setMyCards(cards);
 
         human = new HumanPlayer("human", Color.red, 0, 0);
-        cards.clear();
+        cards = new ArrayList<Card>();
         cards.add(new Card("Knife", CardType.WEAPON));
         human.setMyCards(cards);
 
@@ -232,7 +230,6 @@ public class GameActionTests {
     public void testDecoySuggestionHuman() { // tests case where the person suggesting is the only person able to disprove, such that null is returned
     	createPlayers();
     	Solution suggestion = new Solution("blah", "Knife", "bleh");
-    	System.out.print("This one important: ");
     	assertEquals(null, board.handleSuggestion(suggestion, human, new BoardCell(DoorDirection.NONE, 'W'))); // human has Knife, so null should be returned
     }
     

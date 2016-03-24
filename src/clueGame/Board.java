@@ -272,7 +272,7 @@ public class Board {
 		
 		Card result = null;
 		
-		for (int i = indexOfAccuser + 1; i < NUM_PLAYERS; i++){
+		/*for (int i = indexOfAccuser + 1; i < NUM_PLAYERS; i++){
 			Player currentPlayer = players.get(i);
 			result = currentPlayer.disproveSuggestion(suggestion);
 			if (result != null && currentPlayer != accusingPlayer) {
@@ -284,13 +284,14 @@ public class Board {
 			Player currentPlayer = players.get(i);
 			result = currentPlayer.disproveSuggestion(suggestion);
 			if (result != null && currentPlayer != accusingPlayer) {
+				//System.out.println(currentPlayer.getMyCards());
+				//System.out.println(result);
 				return result;
 			}
-		}
+		} */
 		
-		/*for (int i = 0; i < NUM_PLAYERS - 1; i++) {
+		for (int i = 0; i < NUM_PLAYERS - 1; i++) {
 			Player currentPlayer = players.get((indexOfAccuser + i + 1) % NUM_PLAYERS);
-			//System.out.println(currentPlayer.getPlayerName());
 			result = currentPlayer.disproveSuggestion(suggestion);
 			if (result == null) {
 				continue;
@@ -298,7 +299,7 @@ public class Board {
 			else {
 				break;
 			}
-		}*/
+		}
 		
 		return result;
 	}

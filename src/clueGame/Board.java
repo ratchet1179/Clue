@@ -69,7 +69,6 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
-		
 		setUpCards();
 		//dealCards();
 		calcAdjacencies();
@@ -82,18 +81,14 @@ public class Board {
 		loadWeaponsConfig();		
 	}
 
-
 	@SuppressWarnings("resource")
 	public void loadRoomConfig() throws BadConfigFormatException {
 		BufferedReader legendReader;
 		String line = "";
 		String delimiter = ",";
-
 		try {
 			legendReader = new BufferedReader(new FileReader(legendFile));
-
 			rooms = new HashMap<Character, String>();
-
 			while ((line = legendReader.readLine()) != null) {
 				// use comma as separator
 				String[] data = line.split(delimiter);
@@ -108,14 +103,11 @@ public class Board {
 				String type = data[2].trim();
 				if (type.equals("Card")) {
 					cardRooms.add(roomName);
-				}
-				else if (type.equals("Other")) {
+				} else if (type.equals("Other")) {
 					//do nothing
-				}
-				else {
+				} else {
 					throw new BadConfigFormatException("Invalid format in legend file.");
 				}
-
 				rooms.put(roomID, roomName);
 			}
 		} catch (FileNotFoundException e) {
@@ -127,25 +119,19 @@ public class Board {
 
 	@SuppressWarnings("resource")
 	public void loadBoardConfig() throws BadConfigFormatException {
-
 		ArrayList<ArrayList<BoardCell>> tempBoard = new ArrayList<ArrayList<BoardCell>>();
 		String line = "";
 		String delimiter = ",";
 		BufferedReader boardReader;
-
 		try {
-
 			int tempBoardRow = 0;
 			int tempBoardCol = 0;
 			boardReader = new BufferedReader(new FileReader(boardFile));
-
 			while((line = boardReader.readLine())  != null) {
 				String[] data = line.split(delimiter);
 				tempBoard.add(new ArrayList<BoardCell>());
-				for (String s : data){
-
+				for (String s : data) {
 					BoardCell boardCell = stringToBoardCell(s);
-
 					boardCell.setCol(tempBoardCol);
 					boardCell.setRow(tempBoardRow);
 					tempBoard.get(tempBoardRow).add(boardCell);
@@ -174,15 +160,12 @@ public class Board {
 				try {
 					board[i][j] = tempBoard.get(i).get(j);
 				}
-
 				// We convert it here to a BadConfigFormatException
 				catch (Exception e) {
 					throw new BadConfigFormatException(". Rows or columns uneven. Error in loadBoardConfig()");
 				}
 			}
 		}
-
-
 	}
 	
 	@SuppressWarnings("resource")
@@ -289,18 +272,22 @@ public class Board {
 	}
 
 	public BoardCell stringToBoardCell(String data) throws BadConfigFormatException {
-
 		DoorDirection direction = DoorDirection.NONE;
-
 		if (data.length() != 1) {
-			if(data.endsWith("U")) direction = DoorDirection.UP;
-			else if(data.endsWith("D")) direction = DoorDirection.DOWN;
-			else if(data.endsWith("L")) direction = DoorDirection.LEFT;
-			else if(data.endsWith("R")) direction = DoorDirection.RIGHT;
-			else if(data.endsWith("N")) direction = DoorDirection.NONE;
-			else throw new BadConfigFormatException(". Invalid characters on board. Error in convertToBoardCell()" );
+			if(data.endsWith("U")) {
+			    direction = DoorDirection.UP;
+			} else if(data.endsWith("D")) {
+			    direction = DoorDirection.DOWN;
+			} else if(data.endsWith("L")) {
+			    direction = DoorDirection.LEFT;
+			} else if(data.endsWith("R")) {
+			    direction = DoorDirection.RIGHT;
+			} else if(data.endsWith("N")) {
+			    direction = DoorDirection.NONE;
+			} else {
+			    throw new BadConfigFormatException(". Invalid characters on board. Error in convertToBoardCell()" );
+			}
 		}
-		
 		char doorLetter = data.charAt(0);
 		if (!rooms.containsKey(doorLetter)) {
 			throw new BadConfigFormatException("Invalid room character on the board.");
@@ -373,28 +360,29 @@ public class Board {
 
 				else if (board[i][j].isWalkway()) {
 					if (i - 1 >= 0) {
-						if (board[i - 1][j].isWalkway()) 
+						if (board[i - 1][j].isWalkway()) {
 							adjacencyList.add(board[i - 1][j]);
-						else if (board[i - 1][j].isDoorway() && (board[i - 1][j]).getDoorDirection() == DoorDirection.DOWN)
+						} else if (board[i - 1][j].isDoorway() && (board[i - 1][j]).getDoorDirection() == DoorDirection.DOWN) {
 							adjacencyList.add(board[i - 1][j]);
-					}
-					if (j - 1 >= 0) {
-						if (board[i][j - 1].isWalkway()) 
+						}
+					} if (j - 1 >= 0) {
+						if (board[i][j - 1].isWalkway()) { 
 							adjacencyList.add(board[i][j - 1]);
-						else if (board[i][j - 1].isDoorway() && (board[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) 
+						} else if (board[i][j - 1].isDoorway() && (board[i][j - 1]).getDoorDirection() == DoorDirection.RIGHT) { 
 							adjacencyList.add(board[i][j - 1]);
-					}
-					if (i + 1 < numRows) {
-						if (board[i + 1][j].isWalkway()) 
+						}
+					} if (i + 1 < numRows) {
+						if (board[i + 1][j].isWalkway()) { 
 							adjacencyList.add(board[i + 1][j]);
-						else if (board[i + 1][j].isDoorway() && (board[i + 1][j]).getDoorDirection() == DoorDirection.UP) 
+						} else if (board[i + 1][j].isDoorway() && (board[i + 1][j]).getDoorDirection() == DoorDirection.UP) { 
 							adjacencyList.add(board[i + 1][j]);
-					}
-					if (j + 1 < numColumns) {
-						if (board[i][j + 1].isWalkway()) 
+						}
+					} if (j + 1 < numColumns) {
+						if (board[i][j + 1].isWalkway()) { 
 							adjacencyList.add(board[i][j + 1]);
-						else if (board[i][j + 1].isDoorway() && (board[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) 
+						} else if (board[i][j + 1].isDoorway() && (board[i][j + 1]).getDoorDirection() == DoorDirection.LEFT) { 
 							adjacencyList.add(board[i][j + 1]);
+						}
 					}
 				}
 
@@ -422,7 +410,6 @@ public class Board {
 	}
 
 	private void findAllTargets(BoardCell boardCell, int steps) {
-
 		LinkedList<BoardCell> adjacentCells = new LinkedList<BoardCell>();
 		calcAdjacencies();
 		adjacentCells = adjacencyMatrix.get(boardCell);
@@ -432,13 +419,11 @@ public class Board {
 
 		for (BoardCell adjCell : adjacentCells) {
 			visited.add(adjCell);
-
 			if (steps == 1 || adjCell.isDoorway()){
 				targets.add(adjCell);
+			} else {
+			    findAllTargets(adjCell, steps - 1);
 			}
-
-			else findAllTargets(adjCell, steps - 1);
-
 			visited.remove(adjCell);
 		}		
 	}

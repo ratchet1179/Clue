@@ -3,12 +3,10 @@ package clueTests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.*;
 
-import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
@@ -20,7 +18,6 @@ import clueGame.Player;
 import clueGame.Solution;
 
 import java.awt.Color;
-import java.awt.Point;
 
 public class GameActionTests {
     private static Board board;
@@ -36,10 +33,10 @@ public class GameActionTests {
     	mechE = new Card("Unoriginal MechE", CardType.PERSON);
     	quad = new Card("QuadCopter", CardType.WEAPON);
     	bathroom = new Card("Bathroom", CardType.ROOM);
-    	Card [] cards = {mechE, new Card("Stinky Physicist", CardType.PERSON),
+    	Card [] cardArray = {mechE, new Card("Stinky Physicist", CardType.PERSON),
     						quad, new Card("Loncapa Red Box", CardType.WEAPON),
     						bathroom, new Card("Poolhouse", CardType.ROOM)};
-    	testCards = cards;
+    	testCards = cardArray;
     }
     
     @Before
@@ -159,50 +156,50 @@ public class GameActionTests {
 		assertTrue(quadReturned > 0);
 		assertTrue(bathroomReturned > 0);
     }
-    
+
     public static void createPlayers() {
-    	ArrayList<Player> players = new ArrayList<Player>();
-    	ArrayList<Card> cards = new ArrayList<Card>();
-    	
-    	Player npc1 = new ComputerPlayer("npc1", Color.red, 0, 0);
-    	cards.clear();
-    	cards.add(new Card("John", CardType.PERSON));
-    	npc1.setMyCards(cards);
-    	
-    	Player npc2 = new ComputerPlayer("npc2", Color.red, 0, 0);
-    	cards.clear();
-    	cards.add(new Card("Joe", CardType.PERSON));
-    	npc2.setMyCards(cards);
-    	
-    	Player npc3 = new ComputerPlayer("npc3", Color.red, 0, 0);
-    	cards.clear();
-    	cards.add(new Card("Jack", CardType.PERSON));
-    	npc3.setMyCards(cards);
-    	
-    	Player npc4 = new ComputerPlayer("npc3", Color.red, 0, 0);
-    	cards.clear();
-    	cards.add(new Card("Jane", CardType.PERSON));
-    	npc4.setMyCards(cards);
-    	
-    	Player npc5 = new ComputerPlayer("npc3", Color.red, 0, 0);
-    	cards.clear();
-    	cards.add(new Card("Jill", CardType.PERSON));
-    	npc5.setMyCards(cards);
-    	
-    	Player human = new HumanPlayer("human", Color.red, 0, 0);
-    	cards.clear();
-    	cards.add(new Card("Knife", CardType.WEAPON));
-    	human.setMyCards(cards);
-    	
-    	
-    	players.add(npc1);
-    	players.add(npc2);
-    	players.add(npc3);
-    	players.add(npc4);
-    	players.add(npc5);
-    	players.add(human);
-    	
-    	board.setPlayers(players);
+
+        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<Card> cards = new ArrayList<Card>();
+
+        Player npc1 = new ComputerPlayer("npc1", Color.red, 0, 0);
+        cards.clear();
+        cards.add(new Card("John", CardType.PERSON));
+        npc1.setMyCards(cards);
+
+        Player npc2 = new ComputerPlayer("npc2", Color.red, 0, 0);
+        cards.clear();
+        cards.add(new Card("Joe", CardType.PERSON));
+        npc2.setMyCards(cards);
+
+        Player npc3 = new ComputerPlayer("npc3", Color.red, 0, 0);
+        cards.clear();
+        cards.add(new Card("Jack", CardType.PERSON));
+        npc3.setMyCards(cards);
+
+        Player npc4 = new ComputerPlayer("npc3", Color.red, 0, 0);
+        cards.clear();
+        cards.add(new Card("Jane", CardType.PERSON));
+        npc4.setMyCards(cards);
+
+        Player npc5 = new ComputerPlayer("npc3", Color.red, 0, 0);
+        cards.clear();
+        cards.add(new Card("Jill", CardType.PERSON));
+        npc5.setMyCards(cards);
+
+        Player human = new HumanPlayer("human", Color.red, 0, 0);
+        cards.clear();
+        cards.add(new Card("Knife", CardType.WEAPON));
+        human.setMyCards(cards);
+
+        players.add(npc1);
+        players.add(npc2);
+        players.add(npc3);
+        players.add(npc4);
+        players.add(npc5);
+        players.add(human);
+
+        board.setPlayers(players);
     }
     
     @Test
@@ -247,4 +244,87 @@ public class GameActionTests {
     	assertEquals(new Card("Jack", CardType.PERSON), board.handleSuggestion(suggestion, "npc4", new BoardCell(DoorDirection.NONE, 'W')));
     }
     
+    //---------------------------- TARGET SELECTION TESTS ------------------------------------
+    @Test
+    public void testEnteringUnvisitedRoom() {
+        int initialRow = 14;
+        int initialColumn = 2;
+        int steps = 2;
+        int expectedRow = 16; // TODO how are we defining a player being "in" a room?
+        int expectedColumn = 2;
+        board.calcTargets(initialRow, initialColumn, steps);
+        Set<BoardCell> targets = board.getTargets();
+        for (int i = 0; i < 100; i++) {
+            ComputerPlayer npc = new ComputerPlayer("npc", Color.red, initialRow, initialColumn);
+            npc.pickLocation(targets);
+            npc.setRoomLastVisited("Kitchen");
+            assertEquals(npc.getRow(), expectedRow); // supposed to be in the lounge
+            assertEquals(npc.getColumn(), expectedColumn);
+        }
+    }
+    
+    @Test
+    public void testEnteringVisitedRoom() {
+        int initialRow = 15;
+        int initialColumn = 2;
+        int steps = 1;
+        int possibility_room = 0;
+        int possibility_15_1 = 0;
+        int possibility_15_3 = 0;
+        int possibility_13_2 = 0;
+        board.calcTargets(initialRow, initialColumn, steps);
+        Set<BoardCell> targets = board.getTargets();
+        for (int i = 0; i < 100; i++) {
+            ComputerPlayer npc = new ComputerPlayer("npc", Color.red, initialRow, initialColumn);
+            npc.pickLocation(targets);
+            npc.setRoomLastVisited("Lounge"); // coming from lounge, and possibly going to lounge
+            if (npc.getRow() == 16 && npc.getColumn() == 2) {
+                possibility_room++;
+            } else if (npc.getRow() == 15 && npc.getColumn() == 1){
+                possibility_15_1++;
+            } else if (npc.getRow() == 15 && npc.getColumn() == 3){
+                possibility_15_3++;
+            } else if (npc.getRow() == 13 && npc.getColumn() == 2){
+                possibility_13_2++;
+            } else {
+                fail("Incorrect square reached");
+            }
+        }
+        assertTrue(possibility_room != 0);
+        assertTrue(possibility_15_1 != 0);
+        assertTrue(possibility_15_3 != 0);
+        assertTrue(possibility_13_2 != 0);
+    }
+    
+    @Test
+    public void testRandomSelectionWithoutRoom() {
+        int initialRow = 17;
+        int initialColumn = 9;
+        int steps = 1;
+        int possibility_18_9 = 0;
+        int possibility_17_8 = 0;
+        int possibility_17_10 = 0;
+        int possibility_16_9 = 0;
+        board.calcTargets(initialRow, initialColumn, steps);
+        Set<BoardCell> targets = board.getTargets();
+        for (int i = 0; i < 100; i++) {
+            ComputerPlayer npc = new ComputerPlayer("npc", Color.red, initialRow, initialColumn);
+            npc.pickLocation(targets);
+            if (npc.getRow() == 18 && npc.getColumn() == 9) {
+                possibility_18_9++;
+            } else if (npc.getRow() == 17 && npc.getColumn() == 8){
+                possibility_17_8++;
+            } else if (npc.getRow() == 17 && npc.getColumn() == 10){
+                possibility_17_10++;
+            } else if (npc.getRow() == 16 && npc.getColumn() == 9){
+                possibility_16_9++;
+            } else {
+                fail("Incorrect square reached");
+            }
+        }
+        assertTrue(possibility_18_9 != 0);
+        assertTrue(possibility_17_8 != 0);
+        assertTrue(possibility_17_10 != 0);
+        assertTrue(possibility_16_9 != 0);
+    }
 }

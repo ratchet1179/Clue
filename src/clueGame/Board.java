@@ -258,8 +258,49 @@ public class Board {
 		
 	}
 	
-	public Card handleSuggestion(Solution suggestion, String accusingPlayer, BoardCell clicked) {
-		return null;
+	public Card handleSuggestion(Solution suggestion, Player accusingPlayer, BoardCell clicked) {
+		int indexOfAccuser = -1;
+		/*for (int i = 0; i < NUM_PLAYERS; i++) {
+			if (players.get(i).getPlayerName().equals(accusingPlayer)) {
+				indexOfAccuser = i;
+				break;
+			}
+		}*/
+		
+		indexOfAccuser = players.indexOf(accusingPlayer);
+		System.out.println(indexOfAccuser);
+		
+		Card result = null;
+		
+		for (int i = indexOfAccuser + 1; i < NUM_PLAYERS; i++){
+			Player currentPlayer = players.get(i);
+			result = currentPlayer.disproveSuggestion(suggestion);
+			if (result != null && currentPlayer != accusingPlayer) {
+				return result;
+			}
+		}
+		
+		for (int i = 0; i < indexOfAccuser; i++) {
+			Player currentPlayer = players.get(i);
+			result = currentPlayer.disproveSuggestion(suggestion);
+			if (result != null && currentPlayer != accusingPlayer) {
+				return result;
+			}
+		}
+		
+		/*for (int i = 0; i < NUM_PLAYERS - 1; i++) {
+			Player currentPlayer = players.get((indexOfAccuser + i + 1) % NUM_PLAYERS);
+			//System.out.println(currentPlayer.getPlayerName());
+			result = currentPlayer.disproveSuggestion(suggestion);
+			if (result == null) {
+				continue;
+			}
+			else {
+				break;
+			}
+		}*/
+		
+		return result;
 	}
 	
 	public boolean checkAccusation(Solution accusation) {

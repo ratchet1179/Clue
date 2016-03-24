@@ -1,6 +1,11 @@
 package clueGame;
 
 public class Card {
+	@Override
+	public String toString() {
+		return "Card [cardName=" + cardName + ", cardType=" + cardType + "]";
+	}
+
 	private String cardName;
 	private CardType cardType;
 	

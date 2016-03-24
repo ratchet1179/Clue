@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player {
 	public static final int MAX_CARDS = 18;
@@ -22,9 +23,34 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(Solution suggestion) {
-		return null;
+		Card suggestedPerson = new Card(suggestion.person, CardType.PERSON);
+		Card suggestedWeapon = new Card(suggestion.weapon, CardType.WEAPON);
+		Card suggestedRoom = new Card(suggestion.room, CardType.ROOM);
+		
+		ArrayList<Card> possibleCardsToReturn = new ArrayList<Card>();
+		if (myCards.contains(suggestedPerson)) {
+			possibleCardsToReturn.add(suggestedPerson);
+		}
+		if (myCards.contains(suggestedWeapon)) {
+			possibleCardsToReturn.add(suggestedWeapon);
+		}
+		if (myCards.contains(suggestedRoom)) {
+			possibleCardsToReturn.add(suggestedRoom);
+		}
+		
+		Random rng = new Random();
+		
+		if (possibleCardsToReturn.size() == 0) {
+			return null;
+		}
+		return possibleCardsToReturn.get(rng.nextInt(possibleCardsToReturn.size()));
 	}
 	
+	@Override
+	public String toString() {
+		return "Player [playerName=" + playerName + "]";
+	}
+
 	public String getPlayerName() {
 		return playerName;
 	}

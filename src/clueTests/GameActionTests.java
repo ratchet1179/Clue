@@ -58,6 +58,8 @@ public class GameActionTests {
         board.dealCards();
     }
     
+    //-------------------------------------TEST ACCUSATIONS---------------------------------------------------
+    
     @Test
     public void testCorrectAccusation() { // tests a solution with all correct components
     	Solution accusation = board.getSolution();
@@ -112,8 +114,10 @@ public class GameActionTests {
     	assertFalse(board.checkAccusation(accusation));
     }
     
+    //---------------------------------TEST SUGGESTIONS: ONE PERSON-----------------------------------------
+    
     @Test
-    public void testSuggestionOneCorrect() {
+    public void testSuggestionOneCorrect() { // test case where only one part of the suggestion is correct
     	Solution suggestion = new Solution("Unoriginal MechE", "blah", "bleh");
     	assertEquals(tester.disproveSuggestion(suggestion), mechE);
 
@@ -125,7 +129,7 @@ public class GameActionTests {
     }
     
     @Test
-    public void testSuggestionMultipleCorrect() {
+    public void testSuggestionMultipleCorrect() { // test case where only two parts of the suggestion are correct
     	int mechEReturned = 0;
     	int quadReturned = 0;
     	int bathroomReturned = 0;
@@ -166,8 +170,10 @@ public class GameActionTests {
 		assertTrue(quadReturned > 0);
 		assertTrue(bathroomReturned > 0);
     }
+    
+    //----------------------------------TEST SUGGESTIONS: MULTIPLE PLAYERS--------------------------------------------
 
-    public static void createPlayers() {
+    public static void createPlayers() { // this method used only for multi-player tests
 
         ArrayList<Player> players = new ArrayList<Player>();
         ArrayList<Card> cards = new ArrayList<Card>();

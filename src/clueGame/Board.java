@@ -331,7 +331,7 @@ public class Board {
         cards.remove(new Card(solutionWeapon, CardType.WEAPON));
         String solutionRoom = (new ArrayList<String>(cardRooms)).get(rng.nextInt(cardRooms.size()));
         cards.remove(new Card(solutionRoom, CardType.ROOM));
-        setSolution(new Solution(solutionPerson, solutionRoom, solutionWeapon));
+        setSolution(new Solution(solutionPerson, solutionWeapon, solutionRoom));
         // distribute remaining cards to the players
         int playerNumber = 0;
         int originalSize = cards.size();
@@ -466,6 +466,11 @@ public class Board {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+	
+	//for the sake of testing:
+    public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
 
 	public Set<Card> getCards() {
 		return cards;
@@ -478,5 +483,4 @@ public class Board {
     public void setSolution(Solution solution) {
         this.solution = solution;
     }
-
 }

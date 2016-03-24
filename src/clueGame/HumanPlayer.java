@@ -6,7 +6,7 @@ public class HumanPlayer extends Player {
 
 	public HumanPlayer(String playerName, Color color, int row, int column) {
 		super(playerName, color, row, column);
-		// TODO Auto-generated constructor stub
+		super.isHuman = true;
 	}
 
 }

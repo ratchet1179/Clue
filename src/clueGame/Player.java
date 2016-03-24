@@ -12,6 +12,7 @@ public class Player {
 	private Color color;
 	private ArrayList<Card> myCards = new ArrayList<Card>();
 	private ArrayList<Card> seenCards = new ArrayList<Card>();
+	protected boolean isHuman;
 	
 	public Player(String playerName, Color color, int row, int column) {
 		this.playerName = playerName;
@@ -52,8 +53,12 @@ public class Player {
         return seenCards;
     }
     
-    //for the sake of testing:
+	//for the sake of testing:
     public void setMyCards(ArrayList<Card> myCards) {
 		this.myCards = myCards;
+	}
+
+	public boolean isHuman() {
+		return isHuman;
 	}
 }

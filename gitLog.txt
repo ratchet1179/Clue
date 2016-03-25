@@ -1,4 +1,52 @@
-REPOSITORY USED: standard (the only repository present)
+DEFAULT REPOSITORY USED
+
+commit 995d76610df3c174f94e0d49f145be34937b4adb
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 24 18:06:34 2016 -0600
+
+    All tests for target selection now pass
+
+commit ca015290067a348218b189dea9add747fd75a391
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 24 15:36:34 2016 -0600
+
+    Code cleanup
+
+commit bf17d1e67cb911653b9681111081af753d7e5e07
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 24 15:32:40 2016 -0600
+
+    All tests for suggestions now pass
+
+commit 2e94dd8510229f2d642eb10a2bbbe65b6020ec98
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 24 12:18:01 2016 -0600
+
+    Worked on makign tests pass
+
+commit de74ff31cebd2c2f5cfbc5240d56b02522d6c757
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Wed Mar 23 22:10:28 2016 -0600
+
+    Finished target selection tests
+
+commit 77fcf4cafc877b9edd53253ed30888e820f4cf6d
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Wed Mar 23 18:58:43 2016 -0600
+
+    Completed failing tests for disproving suggestions
+
+commit 7a1e81793a992543a995b5991abfb46649666d35
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 23:14:20 2016 -0600
+
+    Added tests for disproveSuggestions: not complete
+
+commit 07a381cb8beb12e68842e1c314a5bc534d1bc245
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 22 22:37:34 2016 -0600
+
+    Updated gitLog.txt
 
 commit d221d087f57801133390203437c87bc248bec603
 Author: Adrien Perinet <aperinet@mines.edu>

@@ -46,6 +46,11 @@ public class Player {
 		return possibleCardsToReturn.get(rng.nextInt(possibleCardsToReturn.size()));
 	}
 	
+	public void move(BoardCell targetCell) {
+		row = targetCell.getRow();
+		column = targetCell.getCol();
+	}
+	
 	@Override
 	public String toString() {
 		return "Player [playerName=" + playerName + ", myCards=" + myCards + "]";

@@ -142,7 +142,7 @@ public class GameActionTests {
 			} else if (result.equals(quad)) {
 				quadReturned++;
 			} else {
-				fail();
+				fail("Unexpected card returned");
 			}
 
 			suggestion = new Solution("blah", "QuadCopter", "Bathroom");
@@ -152,7 +152,7 @@ public class GameActionTests {
 			} else if (result.equals(bathroom)) {
 				bathroomReturned++;
 			} else {
-				fail();
+				fail("Unexpected card returned");
 			}
 
 			suggestion = new Solution("Unoriginal MechE", "blah", "Bathroom");
@@ -162,7 +162,7 @@ public class GameActionTests {
 			} else if (result.equals(bathroom)) {
 				bathroomReturned++;
 			} else {
-				fail();
+				fail("Unexpected card returned");
 			}
 		}
 		
@@ -262,7 +262,7 @@ public class GameActionTests {
     
     //---------------------------- TARGET SELECTION TESTS ------------------------------------
     @Test
-    public void testEnteringUnvisitedRoom() {
+    public void testEnteringUnvisitedRoom() { // tests visiting a room we did not come from previously
         int initialRow = 14;
         int initialColumn = 2;
         int steps = 2;
@@ -272,36 +272,36 @@ public class GameActionTests {
         Set<BoardCell> targets = board.getTargets();
         for (int i = 0; i < 100; i++) {
             ComputerPlayer npc = new ComputerPlayer("npc", Color.red, initialRow, initialColumn);
-            npc.pickLocation(targets);
-            npc.setRoomLastVisited("Kitchen");
-            assertEquals(npc.getRow(), expectedRow); // supposed to be in the lounge
-            assertEquals(npc.getColumn(), expectedColumn);
+            npc.setRoomLastVisited('K');
+            npc.move(npc.pickLocation(targets));
+            assertEquals(expectedRow, npc.getRow()); // supposed to be in the lounge
+            assertEquals(expectedColumn, npc.getColumn());
         }
     }
     
     @Test
-    public void testEnteringVisitedRoom() {
+    public void testEnteringVisitedRoom() { // testing moving within the range of a room we were just in
         int initialRow = 15;
         int initialColumn = 2;
         int steps = 1;
         int possibility_room = 0;
         int possibility_15_1 = 0;
         int possibility_15_3 = 0;
-        int possibility_13_2 = 0;
+        int possibility_14_2 = 0;
         board.calcTargets(initialRow, initialColumn, steps);
         Set<BoardCell> targets = board.getTargets();
         for (int i = 0; i < 100; i++) {
             ComputerPlayer npc = new ComputerPlayer("npc", Color.red, initialRow, initialColumn);
-            npc.pickLocation(targets);
-            npc.setRoomLastVisited("Lounge"); // coming from lounge, and possibly going to lounge
+            npc.setRoomLastVisited('L'); // coming from lounge, and possibly going to lounge
+            npc.move(npc.pickLocation(targets));
             if (npc.getRow() == 16 && npc.getColumn() == 2) {
                 possibility_room++;
             } else if (npc.getRow() == 15 && npc.getColumn() == 1){
                 possibility_15_1++;
             } else if (npc.getRow() == 15 && npc.getColumn() == 3){
                 possibility_15_3++;
-            } else if (npc.getRow() == 13 && npc.getColumn() == 2){
-                possibility_13_2++;
+            } else if (npc.getRow() == 14 && npc.getColumn() == 2){
+                possibility_14_2++;
             } else {
                 fail("Incorrect square reached");
             }
@@ -309,11 +309,11 @@ public class GameActionTests {
         assertTrue(possibility_room != 0);
         assertTrue(possibility_15_1 != 0);
         assertTrue(possibility_15_3 != 0);
-        assertTrue(possibility_13_2 != 0);
+        assertTrue(possibility_14_2 != 0);
     }
     
     @Test
-    public void testRandomSelectionWithoutRoom() {
+    public void testRandomSelectionWithoutRoom() { // testing moving when no rooms are valid targets
         int initialRow = 17;
         int initialColumn = 9;
         int steps = 1;
@@ -325,7 +325,7 @@ public class GameActionTests {
         Set<BoardCell> targets = board.getTargets();
         for (int i = 0; i < 100; i++) {
             ComputerPlayer npc = new ComputerPlayer("npc", Color.red, initialRow, initialColumn);
-            npc.pickLocation(targets);
+            npc.move(npc.pickLocation(targets));
             if (npc.getRow() == 18 && npc.getColumn() == 9) {
                 possibility_18_9++;
             } else if (npc.getRow() == 17 && npc.getColumn() == 8){

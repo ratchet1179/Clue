@@ -217,17 +217,9 @@ public class Board {
         if (in.hasNextLine()) {
         	throw new BadConfigFormatException("Too many players in " + playersFile);
         }
-
         in.close();
 	}
-	
-	public Color convertColor(String strColor) throws Exception {
-		Color color;
-		Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
-		color = (Color)field.get(null);
-		return color;
-	}
-	
+
 	@SuppressWarnings("resource")
     public void loadWeaponsConfig() throws BadConfigFormatException {
 		// SET UP WEAPONS
@@ -250,45 +242,33 @@ public class Board {
         if (in.hasNextLine()) {
         	throw new BadConfigFormatException("Too many weapons in " + weaponsFile);
         }
-        
         in.close();
 	}
 	
+	public Color convertColor(String strColor) throws Exception {
+		Color color;
+		Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+		color = (Color)field.get(null);
+		return color;
+	}
+	
 	public void selectAnswer() {
-		
+		Random rng = new Random();
+		// put cards into solution, removing them from the list
+        String solutionPerson = players.get(rng.nextInt(players.size())).getPlayerName();
+        cards.remove(new Card(solutionPerson, CardType.PERSON));
+        String solutionWeapon = weapons.get(rng.nextInt(weapons.size()));
+        cards.remove(new Card(solutionWeapon, CardType.WEAPON));
+        String solutionRoom = (new ArrayList<String>(cardRooms)).get(rng.nextInt(cardRooms.size()));
+        cards.remove(new Card(solutionRoom, CardType.ROOM));
+        setSolution(new Solution(solutionPerson, solutionWeapon, solutionRoom));
 	}
 	
 	public Card handleSuggestion(Solution suggestion, Player accusingPlayer, BoardCell clicked) {
 		int indexOfAccuser = -1;
-		/*for (int i = 0; i < NUM_PLAYERS; i++) {
-			if (players.get(i).getPlayerName().equals(accusingPlayer)) {
-				indexOfAccuser = i;
-				break;
-			}
-		}*/
 		
 		indexOfAccuser = players.indexOf(accusingPlayer);
-		System.out.println(indexOfAccuser);
-		
 		Card result = null;
-		
-		/*for (int i = indexOfAccuser + 1; i < NUM_PLAYERS; i++){
-			Player currentPlayer = players.get(i);
-			result = currentPlayer.disproveSuggestion(suggestion);
-			if (result != null && currentPlayer != accusingPlayer) {
-				return result;
-			}
-		}
-		
-		for (int i = 0; i < indexOfAccuser; i++) {
-			Player currentPlayer = players.get(i);
-			result = currentPlayer.disproveSuggestion(suggestion);
-			if (result != null && currentPlayer != accusingPlayer) {
-				//System.out.println(currentPlayer.getMyCards());
-				//System.out.println(result);
-				return result;
-			}
-		} */
 		
 		for (int i = 0; i < NUM_PLAYERS - 1; i++) {
 			Player currentPlayer = players.get((indexOfAccuser + i + 1) % NUM_PLAYERS);
@@ -300,7 +280,6 @@ public class Board {
 				break;
 			}
 		}
-		
 		return result;
 	}
 	
@@ -353,14 +332,7 @@ public class Board {
 	
     public void dealCards() {
         Random rng = new Random();
-        // put cards into solution, removing them from the list
-        String solutionPerson = players.get(rng.nextInt(players.size())).getPlayerName();
-        cards.remove(new Card(solutionPerson, CardType.PERSON));
-        String solutionWeapon = weapons.get(rng.nextInt(weapons.size()));
-        cards.remove(new Card(solutionWeapon, CardType.WEAPON));
-        String solutionRoom = (new ArrayList<String>(cardRooms)).get(rng.nextInt(cardRooms.size()));
-        cards.remove(new Card(solutionRoom, CardType.ROOM));
-        setSolution(new Solution(solutionPerson, solutionWeapon, solutionRoom));
+        selectAnswer();
         // distribute remaining cards to the players
         int playerNumber = 0;
         int originalSize = cards.size();
@@ -443,7 +415,6 @@ public class Board {
 	}
 
 	private void calcTargets(BoardCell boardCell, int steps) {
-
 		visited = new HashSet<BoardCell>();
 		visited.add(boardCell);
 		targets = new HashSet<BoardCell>();

@@ -15,7 +15,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Board {
+import javax.swing.JPanel;
+
+public class Board extends JPanel {
 	public final int NUM_PLAYERS = 6;
 	public final int NUM_WEAPONS = 6;
 	private int numColumns, numRows;

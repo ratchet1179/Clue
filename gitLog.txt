@@ -1,5 +1,23 @@
 DEFAULT REPOSITORY USED
 
+commit 8155b53c5a03e44ce7b34d1e4cb0269b8380d15b
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Mon Mar 28 21:41:35 2016 -0600
+
+    Finished GameControlGUI implementation to include required buttons
+
+commit c5531d7bfb326d36e77c68de78c12222db4c00be
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Mar 27 18:57:58 2016 -0600
+
+    Completed most of GameControlGUI
+
+commit 235d34fa0d5a1e53c095bb9fc89a47a4965007b1
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Thu Mar 24 18:11:12 2016 -0600
+
+    .gitignore update
+
 commit 995d76610df3c174f94e0d49f145be34937b4adb
 Author: Adrien Perinet <aperinet@mines.edu>
 Date:   Thu Mar 24 18:06:34 2016 -0600

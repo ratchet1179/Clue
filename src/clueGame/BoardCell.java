@@ -1,9 +1,19 @@
 package clueGame;
 
-public class BoardCell {
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 
+import javax.swing.JPanel;
+
+public class BoardCell extends JPanel {
+	private final int SIDE_LENGTH = 20;
 	private int row;
 	private int column;
+	private int x;
+	private int y;
 	public DoorDirection doorDirection;
 	private char roomLetter;
 
@@ -40,6 +50,7 @@ public class BoardCell {
 
 	public void setRow(int row) {
 		this.row = row;
+		x = row * SIDE_LENGTH;
 	}
 
 	public int getCol() {
@@ -48,6 +59,7 @@ public class BoardCell {
 
 	public void setCol(int col) {
 		this.column = col;
+		y = col * SIDE_LENGTH;
 	}
 
 	public char getRoomLetter() {
@@ -57,5 +69,35 @@ public class BoardCell {
 	public DoorDirection getDoorDirection() {
 		return doorDirection;
 	}
-
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		if (roomLetter == 'W') {
+			g.setColor(Color.YELLOW);
+			g.fillRect(x, y, SIDE_LENGTH, SIDE_LENGTH);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, SIDE_LENGTH, SIDE_LENGTH);
+		}
+		else if (isDoorway()) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setStroke(new BasicStroke(3));
+			switch (doorDirection) {
+			case UP:
+				g2.draw(new Line2D.Float(x, y, x + SIDE_LENGTH, y));
+				break;
+			case LEFT:
+				g2.draw(new Line2D.Float(x, y, x, y + SIDE_LENGTH));
+				break;
+			case RIGHT:
+				g2.draw(new Line2D.Float(x + SIDE_LENGTH, y, x + SIDE_LENGTH, y + SIDE_LENGTH));
+				break;
+			case DOWN:
+				g2.draw(new Line2D.Float(x, y + SIDE_LENGTH, x + SIDE_LENGTH, y + SIDE_LENGTH));
+				break;
+			default:
+				break;
+			}
+		}
+		
+	}
 }

@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -441,6 +442,15 @@ public class Board extends JPanel {
 			}
 			visited.remove(adjCell);
 		}		
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				board[i][j].paintComponent(g);
+			}
+		}
 	}
 
 	public Set<BoardCell> getTargets() {

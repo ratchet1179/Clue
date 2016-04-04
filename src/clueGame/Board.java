@@ -35,7 +35,9 @@ public class Board extends JPanel {
 	private Map<BoardCell, LinkedList<BoardCell>> adjacencyMatrix;
 	private ArrayList<Player> players;
 	private ArrayList<String> weapons;
-	private Set<Card> cards;
+
+
+    private Set<Card> cards;
 	private Solution solution;
 
 	public Board() {
@@ -480,7 +482,11 @@ public class Board extends JPanel {
 		return rooms;
 	}
 
-	public int getNumRows() {
+	public Set<String> getCardRooms() {
+        return cardRooms;
+    }
+
+    public int getNumRows() {
 		return numRows;
 	}
 
@@ -499,8 +505,12 @@ public class Board extends JPanel {
 
 	public ArrayList<Player> getPlayers() {
 		return players;
-	}
-	
+    }
+
+    public ArrayList<String> getWeapons() {
+        return weapons;
+    }
+	   
 	//for the sake of testing:
     public void setPlayers(ArrayList<Player> players) {
 		this.players = players;

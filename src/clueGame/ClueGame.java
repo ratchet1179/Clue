@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class ClueGame extends JFrame {
 	Board board;
@@ -17,7 +16,8 @@ public class ClueGame extends JFrame {
         
         //gameControl = new GameControlGUI();
         //add(gameControl, BorderLayout.CENTER);
-        
+        DetectiveNotesGUI notesDialog = new DetectiveNotesGUI(board.getPlayers(), board.getCardRooms(), board.getWeapons()); // TODO add menu
+
         board = new Board("Clue_LayoutStudent.csv", "Clue_LegendStudent.txt", "CluePlayersStudent.txt", "ClueWeaponsStudent.txt");
         board.initialize();
         board.dealCards();

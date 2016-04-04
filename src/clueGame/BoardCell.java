@@ -35,6 +35,7 @@ public class BoardCell extends JPanel {
 		}
 		else if (isDoorway()) {
 			Graphics2D g2 = (Graphics2D) g;
+			g2.setColor(Color.BLUE);
 			g2.setStroke(new BasicStroke(3));
 			switch (doorDirection) {
 			case UP:
@@ -58,6 +59,7 @@ public class BoardCell extends JPanel {
 		}
 		
 		if (isNameCell) {
+			g.setColor(Color.BLACK);
 			g.drawString(roomName, x, y);
 		}
 		

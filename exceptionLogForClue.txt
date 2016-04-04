@@ -1,1 +1,1 @@
-Invalid format in CluePlayersStudent_BadFormat.txt
+Could not find ClueWeaponsStudent

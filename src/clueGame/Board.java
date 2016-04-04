@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.lang.reflect.Field;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -137,6 +138,7 @@ public class Board extends JPanel {
 					BoardCell boardCell = stringToBoardCell(s);
 					boardCell.setCol(tempBoardCol);
 					boardCell.setRow(tempBoardRow);
+					boardCell.setRoomName(rooms.get(boardCell.getRoomLetter()));
 					tempBoard.get(tempBoardRow).add(boardCell);
 					tempBoardCol++;
 
@@ -297,6 +299,7 @@ public class Board extends JPanel {
 
 	public BoardCell stringToBoardCell(String data) throws BadConfigFormatException {
 		DoorDirection direction = DoorDirection.NONE;
+		Boolean isNameCell = false;
 		if (data.length() != 1) {
 			if(data.endsWith("U")) {
 			    direction = DoorDirection.UP;
@@ -307,16 +310,21 @@ public class Board extends JPanel {
 			} else if(data.endsWith("R")) {
 			    direction = DoorDirection.RIGHT;
 			} else if(data.endsWith("N")) {
+				isNameCell = true;
 			    direction = DoorDirection.NONE;
 			} else {
 			    throw new BadConfigFormatException(". Invalid characters on board. Error in convertToBoardCell()" );
 			}
 		}
+		
 		char doorLetter = data.charAt(0);
+		BoardCell tempCell = new BoardCell(direction, doorLetter);
+		tempCell.setIsNameCell(isNameCell);
+		
 		if (!rooms.containsKey(doorLetter)) {
 			throw new BadConfigFormatException("Invalid room character on the board.");
 		} else {
-			return new BoardCell(direction, doorLetter);
+			return tempCell;
 		}
 		
 	}
@@ -446,10 +454,21 @@ public class Board extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		paintCells(g);
+		paintPlayers(g);
+	}
+	
+	public void paintCells(Graphics g) {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				board[i][j].paintComponent(g);
 			}
+		}
+	}
+	
+	public void paintPlayers(Graphics g) {
+		for (Player p : players) {
+			p.paintComponent(g);
 		}
 	}
 
@@ -467,6 +486,11 @@ public class Board extends JPanel {
 
 	public int getNumColumns() {
 		return numColumns;
+	}
+	
+	public Point getDimensions() { // returns pixel dimensions of board
+		int sideLength = BoardCell.SIDE_LENGTH;
+		return new Point((numColumns + 1)* sideLength, (numRows + 2) * sideLength);
 	}
 
 	public BoardCell getCellAt(int i, int j) {
@@ -492,5 +516,17 @@ public class Board extends JPanel {
 
     public void setSolution(Solution solution) {
         this.solution = solution;
+    }
+    
+    public void findDoorways() {
+    	int counter = 0;
+    	for (int i = 0; i < numRows; i++) {
+    		for (int j = 0; j < numColumns; j++){
+    			if (board[i][j].isDoorway()) {
+    				System.out.println(counter + ": Found doorway.");
+    				counter++;
+    			}
+    		}
+    	}
     }
 }

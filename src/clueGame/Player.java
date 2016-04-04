@@ -1,15 +1,22 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player {
+import javax.swing.JPanel;
+
+public class Player extends JPanel {
 	public static final int MAX_CARDS = 18;
 	private String playerName;
 	private int row;
 	private int column;
+	private int x;
+	private int y;
 	private Color color;
 	private ArrayList<Card> myCards = new ArrayList<Card>();
 	private ArrayList<Card> seenCards = new ArrayList<Card>();
@@ -19,6 +26,8 @@ public class Player {
 		this.playerName = playerName;
 		this.row = row;
 		this.column = column;
+		x = column * BoardCell.SIDE_LENGTH;
+		y = row * BoardCell.SIDE_LENGTH;
 		this.color = color;
 	}
 
@@ -46,9 +55,23 @@ public class Player {
 		return possibleCardsToReturn.get(rng.nextInt(possibleCardsToReturn.size()));
 	}
 	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.setColor(Color.BLACK);
+		g.drawOval(x, y, BoardCell.SIDE_LENGTH, BoardCell.SIDE_LENGTH);
+		Graphics2D g2 = (Graphics2D) g;
+		Ellipse2D.Double circle = new Ellipse2D.Double(x, y, BoardCell.SIDE_LENGTH, BoardCell.SIDE_LENGTH);
+		g2.setColor(color);
+		g2.fill(circle);
+		
+		
+	}
+	
 	public void move(BoardCell targetCell) {
 		row = targetCell.getRow();
+		y = row * BoardCell.SIDE_LENGTH;
 		column = targetCell.getCol();
+		x = column * BoardCell.SIDE_LENGTH;
 	}
 	
 	@Override

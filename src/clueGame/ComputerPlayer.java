@@ -35,7 +35,10 @@ public class ComputerPlayer extends Player {
             // no rooms, or rooms weve already visited
             cellToReturn = arrayTargets.get(rng.nextInt(targets.size()));
         }
-        roomLastVisited = cellToReturn.getRoomLetter();
+        
+        if (cellToReturn.isDoorway()){
+            roomLastVisited = cellToReturn.getRoomLetter();
+        }
         return cellToReturn;
     }
 

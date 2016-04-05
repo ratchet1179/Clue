@@ -1,4 +1,47 @@
 DEFAULT REPOSITORY USED
+Pair programming used during class, resulting in more commits by Adrien than by Caleb
+
+commit b8eb207e3ba913a2948a32d1824f464a54fecc4a
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Mon Apr 4 18:34:15 2016 -0600
+
+    completed detective notes dialog, ready for submission
+
+commit d9e0ba6eb3c7903f3b091af5b8669bc376b1b9bc
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Mon Apr 4 17:50:45 2016 -0600
+
+    Progress made on DetectiveNotesGUI to include dropdown menus
+
+commit 8af889c169d4759f475d22b9ad48e25bd4c85322
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Apr 3 20:38:56 2016 -0600
+
+    Added color coding functionality to board cell
+
+commit 6b6300d0fe6e7856fb7829bff6394b2a2d818192
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Sun Apr 3 20:36:40 2016 -0600
+
+    Added full draw functionality to Board, Player, and BoardCell
+
+commit a1e5045fd21a561388e0b72f9fa2a8dba78c4945
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 29 20:53:09 2016 -0600
+
+    Added draw functionality to BoardCells
+
+commit fd92c079d724374b59a0ff6cff4e1a4c163efb83
+Author: Adrien Perinet <aperinet@mines.edu>
+Date:   Tue Mar 29 12:17:40 2016 -0600
+
+    Started work on Board GUI
+
+commit 228519e12e3c08f4ba8176f6130db20eb790c275
+Author: Caleb Jhones <calebjhones@gmail.com>
+Date:   Mon Mar 28 21:46:36 2016 -0600
+
+    gitLog.txt updated
 
 commit 8155b53c5a03e44ce7b34d1e4cb0269b8380d15b
 Author: Caleb Jhones <calebjhones@gmail.com>
